@@ -6,7 +6,12 @@ defmodule ExchangeApi.Application do
   use Application
 
   def start(_type, _args) do
-    children = []
+    IO.inspect("application.ex start", [])
+    children = [
+      ExchangeApiWeb.Telemetry,
+      {Phoenix.PubSub, name: Exchange.PubSub},
+      ExchangeApiWeb.Endpoint
+    ]
 
     opts = [strategy: :one_for_one, name: ExchangeApi.Supervisor]
     Supervisor.start_link(children, opts)
