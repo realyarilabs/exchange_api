@@ -8,7 +8,7 @@
 use Mix.Config
 
 config :exchange_api,
-  ecto_repos: [ExchangeApi.Repo]
+  ecto_repos: []
 
 # Configures the endpoint
 config :exchange_api, ExchangeApiWeb.Endpoint,
