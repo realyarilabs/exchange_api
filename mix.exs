@@ -8,9 +8,7 @@ defmodule ExchangeApi.MixProject do
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
-      start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
-      deps: deps()
+      start_permanent: Mix.env() == :prod
     ]
   end
 
@@ -44,15 +42,5 @@ defmodule ExchangeApi.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
-  end
-
-  # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to install project dependencies and perform other setup tasks, run:
-  #
-  #     $ mix setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
-  defp aliases do
-    []
   end
 end

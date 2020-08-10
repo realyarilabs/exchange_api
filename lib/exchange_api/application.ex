@@ -7,6 +7,7 @@ defmodule ExchangeApi.Application do
 
   def start(_type, _args) do
     IO.inspect("application.ex start", [])
+
     children = [
       ExchangeApiWeb.Telemetry,
       {Phoenix.PubSub, name: Exchange.PubSub},
