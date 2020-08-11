@@ -6,6 +6,5 @@ defmodule ExchangeApiWeb.PageController do
   end
 
   def init(_foo) do
-    IO.inspect("page controller", [])
   end
 end

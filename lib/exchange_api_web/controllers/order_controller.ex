@@ -6,6 +6,5 @@ defmodule ExchangeApiWeb.OrderController do
   end
 
   def init(_foo) do
-    IO.inspect("order controller", [])
   end
 end
