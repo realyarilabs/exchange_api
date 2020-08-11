@@ -29,3 +29,9 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+config :exchange,
+  message_bus_adapter: Exchange.Adapters.EventBus,
+  time_series_adapter: Exchange.Adapters.InMemoryTimeSeries
+config :exchange, Exchange.Application,
+  tickers: [{:AUXLND, :GBP, 1000, 100_000}, {:AGUS, :USD, 1000, 100_000}]
