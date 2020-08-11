@@ -8,7 +8,7 @@ defmodule ExchangeApi.Application do
   def start(_type, _args) do
     children = [
       ExchangeApiWeb.Telemetry,
-      {Phoenix.PubSub, name: Exchange.PubSub},
+      {Phoenix.PubSub, name: ExchangeApi.PubSub},
       ExchangeApiWeb.Endpoint
     ]
 
