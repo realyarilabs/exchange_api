@@ -15,13 +15,7 @@ defmodule ExchangeApiWeb.Router do
   scope "/", ExchangeApiWeb do
     pipe_through(:browser)
 
-    get("/", PageController, :index)
-  end
-
-  scope "/orders", ExchangeApiWeb do
-    pipe_through(:browser)
-
-    get("/", OrderController, :index)
+    resources "/orders", OrderController, only: [:index, :create, :show, :delete]
   end
 
   # Other scopes may use custom stacks.

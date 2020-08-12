@@ -9,7 +9,7 @@ defmodule ExchangeApi.Application do
     children = [
       ExchangeApiWeb.Telemetry,
       {Phoenix.PubSub, name: ExchangeApi.PubSub},
-      ExchangeApiWeb.Endpoint
+      ExchangeApiWeb.Endpoint,
     ]
 
     opts = [strategy: :one_for_one, name: ExchangeApi.Supervisor]
