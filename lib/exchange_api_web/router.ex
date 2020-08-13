@@ -15,7 +15,7 @@ defmodule ExchangeApiWeb.Router do
   scope "/", ExchangeApiWeb do
     pipe_through(:browser)
 
-    scope "ticker/:ticker" do
+    scope "/ticker/:ticker" do
       scope "/orders" do
         get "/open", OrderController, :index_open
         get "/buy_side", OrderController, :index_buy_side
