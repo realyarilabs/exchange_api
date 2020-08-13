@@ -87,7 +87,7 @@ defmodule ExchangeApiWeb.OrderController do
   defp get_time(time) do
     case time do
       nil -> time
-      _ -> 0
+      _ -> elem(DateTime.from_iso8601(time),1)
     end
   end
 
