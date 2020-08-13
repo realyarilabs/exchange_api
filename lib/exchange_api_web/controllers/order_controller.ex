@@ -23,38 +23,35 @@ defmodule ExchangeApiWeb.OrderController do
     time = Map.get(params, "exp_time", nil)
     exp = get_time(time)
 
-    {side_status, side} = get_side(side)
-    {tick_status, tick} = get_ticker(ticker)
-    {type_status, type} = get_type(type)
-    {status, _value} = is_valid({side_status, side}, {tick_status, tick}, {type_status, type})
-
-    with :ok <- status do
-      order_raw = %{
-        order_id: order_id,
-        trader_id: trader_id,
-        side: side,
-        size: size,
-        price: price,
-        type: type,
-        ticker: tick,
-        exp_time: exp
-      }
-      order_status = Exchange.place_order(order_raw, tick)
-      json(conn, %{ status: encode(order_status) })
+    with {:ok, side} <- get_side(side),
+         {:ok, tick} <- get_ticker(ticker),
+         {:ok, type} <- get_type(type) do
+        order_raw = %{
+          order_id: order_id,
+          trader_id: trader_id,
+          side: side,
+          size: size,
+          price: price,
+          type: type,
+          ticker: tick,
+          exp_time: exp
+        }
+        order_status = Exchange.place_order(order_raw, tick)
+        json(conn, %{ status: encode(order_status) })
     end
   end
 
   def show(conn, %{"id" => id, "ticker_id" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
-      orders = Exchange.open_orders_by_trader(tick, id)
-      json(conn, %{ status: elem(orders, 0), data: elem(orders, 1) })
+      {status, orders} = Exchange.open_orders_by_trader(tick, id)
+      json(conn, %{status: status, data: orders})
     end
   end
 
   def delete(conn, %{"id" => id, "ticker_id" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
-      Exchange.cancel_order(id, tick)
-      json(conn, %{ status: "deleted" })
+      order_status = Exchange.cancel_order(id, tick)
+      json(conn, %{ status: order_status })
     end
   end
 
@@ -95,22 +92,6 @@ defmodule ExchangeApiWeb.OrderController do
     case is_tuple(data) do
       true -> %{ elem(data, 0) => elem(data,1) }
       false -> data
-    end
-  end
-
-  defp is_valid(side, ticker, type) do
-    if elem(side, 0) == :ok do
-      if elem(ticker, 0) == :ok do
-        if elem(type, 0) == :ok do
-          {:ok, " "}
-        else
-          type
-        end
-      else
-        ticker
-      end
-    else
-      side
     end
   end
 end
