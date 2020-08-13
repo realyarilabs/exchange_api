@@ -3,57 +3,27 @@ defmodule ExchangeApiWeb.OrderController do
 
   action_fallback ExchangeApiWeb.FallbackController
 
-  def index(conn, %{"ticker_id" => ticker}) do
-    with {:ok , tick} <- get_ticker(ticker) do
+  def index_open(conn, %{"ticker" => ticker}) do
+    with {:ok, tick} <- get_ticker(ticker) do
       {status, data} = Exchange.open_orders(tick)
       json(conn, %{status: status, data: data})
     end
   end
 
-
-  def create(conn,
-              %{"order_id" => order_id,
-                "trader_id" => trader_id,
-                "side" => side,
-                "size" => size,
-                "price" => price,
-                "type" => type,
-                "ticker_id" => ticker} = params) do
-
-    time = Map.get(params, "exp_time", nil)
-    exp = get_time(time)
-
-    with {:ok, side} <- get_side(side),
-         {:ok, tick} <- get_ticker(ticker),
-         {:ok, type} <- get_type(type) do
-        order_raw = %{
-          order_id: order_id,
-          trader_id: trader_id,
-          side: side,
-          size: size,
-          price: price,
-          type: type,
-          ticker: tick,
-          exp_time: exp
-        }
-        order_status = Exchange.place_order(order_raw, tick)
-        json(conn, %{ status: encode(order_status) })
-    end
-  end
-
-  def show(conn, %{"id" => id, "ticker_id" => ticker}) do
+  def index_buy_side(conn, %{"ticker" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
-      {status, orders} = Exchange.open_orders_by_trader(tick, id)
-      json(conn, %{status: status, data: orders})
+      {status, data} = Exchange.total_buy_orders(tick)
+      json(conn, %{status: status, data: data})
     end
   end
 
-  def delete(conn, %{"id" => id, "ticker_id" => ticker}) do
+  def index_sell_side(conn, %{"ticker" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
-      order_status = Exchange.cancel_order(id, tick)
-      json(conn, %{ status: order_status })
+      {status, data} = Exchange.total_sell_orders(tick)
+      json(conn, %{status: status, data: data})
     end
   end
+
 
   # ----- PRIVATE ----- #
 
@@ -62,36 +32,6 @@ defmodule ExchangeApiWeb.OrderController do
       "AUXLND" -> {:ok, :AUXLND}
       "AGUS" -> {:ok, :AGUS}
       _ -> {:error, "Ticker does not exist"}
-    end
-  end
-
-  defp get_side(side) do
-    case side do
-      "sell" -> {:ok, :sell}
-      "buy" -> {:ok, :buy}
-      true -> {:error, "Side does not exist"}
-    end
-  end
-
-  defp get_type(type) do
-    case type do
-      "market" -> {:ok, :market}
-      "limit" -> {:ok, :limit}
-      true -> {:error, "Type does not exist"}
-    end
-  end
-
-  defp get_time(time) do
-    case time do
-      nil -> time
-      _ -> elem(DateTime.from_iso8601(time),1)
-    end
-  end
-
-  defp encode(data) do
-    case is_tuple(data) do
-      true -> %{ elem(data, 0) => elem(data,1) }
-      false -> data
     end
   end
 end
