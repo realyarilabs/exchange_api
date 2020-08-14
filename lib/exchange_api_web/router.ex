@@ -29,6 +29,7 @@ defmodule ExchangeApiWeb.Router do
 
       scope "/traders/:trader_id" do
         resources "/orders", TraderOrdersController, only: [:index, :create, :delete] do
+          delete "/delete", TraderOrdersController, :delete
           get "/completed", TraderOrdersController, :index_completed
         end
       end

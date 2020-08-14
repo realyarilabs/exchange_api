@@ -5,8 +5,7 @@ defmodule ExchangeApiWeb.TraderOrdersController do
 
   def index(conn, %{"trader_id" => trader_id, "ticker" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
-      {status, orders} = Exchange.open_orders_by_trader(tick, trader_id)
-      json(conn, %{status: status, data: orders})
+      set_http_status(conn, Exchange.open_orders_by_trader(tick, trader_id))
     end
   end
 
