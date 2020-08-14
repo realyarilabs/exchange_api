@@ -20,6 +20,11 @@ defmodule ExchangeApiWeb.Router do
         get "/open", OrderController, :index_open
         get "/buy_side", OrderController, :count_buy_side
         get "/sell_side", OrderController, :count_sell_side
+        get "/spread", OrderController, :spread
+        get "/highest_bid_price", OrderController, :highest_bid_price
+        get "/highest_bid_volume", OrderController, :highest_bid_volume
+        get "/lowest_ask_price", OrderController, :lowest_ask_price
+        get "/highest_ask_volume", OrderController, :highest_ask_volume
       end
 
       scope "/traders/:trader_id" do
@@ -29,7 +34,6 @@ defmodule ExchangeApiWeb.Router do
       end
     end
   end
-
   # Other scopes may use custom stacks.
   # scope "/api", ExchangeWeb do
   #   pipe_through :api
