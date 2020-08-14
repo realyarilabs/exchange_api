@@ -9,7 +9,7 @@ defmodule ExchangeApiWeb.TraderOrdersController do
     end
   end
 
-  def index_completed(conn, %{"trader_id" => trader_id, "ticker" => ticker}) do
+  def index_completed(conn, %{"trader_id" => trader_id, "ticker" => ticker}) do #this wrong
     with {:ok, tick} <- get_ticker(ticker) do
       orders = Exchange.completed_trades_by_id(tick, trader_id)
       json(conn, %{data: orders})
@@ -46,14 +46,21 @@ defmodule ExchangeApiWeb.TraderOrdersController do
       }
 
       order_status = Exchange.place_order(order_raw, tick)
-      json(conn, %{status: encode(order_status)})
+      case order_status do
+        :ok -> json(conn, "Order placed.")
+        _ -> put_status(conn, :bad_request) |> json("Failed to place order.")
+      end
     end
   end
 
-  def delete(conn, %{"id" => id, "ticker_id" => ticker}) do
+  @spec delete(any, map) :: any
+  def delete(conn, %{"id" => id, "ticker" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
       order_status = Exchange.cancel_order(id, tick)
-      json(conn, %{status: order_status})
+      case order_status do
+        :ok -> json(conn, "Order cancelled.")
+        _ -> put_status(conn, :bad_request) |> json("Failed to cancel order.")
+      end
     end
   end
 
@@ -87,13 +94,6 @@ defmodule ExchangeApiWeb.TraderOrdersController do
     case time do
       nil -> time
       _ -> elem(DateTime.from_iso8601(time), 1)
-    end
-  end
-
-  defp encode(data) do
-    case is_tuple(data) do
-      true -> %{elem(data, 0) => elem(data, 1)}
-      false -> data
     end
   end
 
