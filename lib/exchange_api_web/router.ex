@@ -18,8 +18,8 @@ defmodule ExchangeApiWeb.Router do
     scope "/ticker/:ticker" do
       scope "/orders" do
         get "/open", OrderController, :index_open
-        get "/buy_side", OrderController, :index_buy_side
-        get "/sell_side", OrderController, :index_sell_side
+        get "/buy_side", OrderController, :count_buy_side
+        get "/sell_side", OrderController, :count_sell_side
       end
 
       scope "/traders/:trader_id" do
