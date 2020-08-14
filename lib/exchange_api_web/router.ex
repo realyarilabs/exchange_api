@@ -34,6 +34,7 @@ defmodule ExchangeApiWeb.Router do
       end
     end
   end
+
   # Other scopes may use custom stacks.
   # scope "/api", ExchangeWeb do
   #   pipe_through :api
