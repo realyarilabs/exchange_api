@@ -93,7 +93,13 @@ defmodule ExchangeApiWeb.TraderOrdersController do
   defp get_time(time) do
     case time do
       nil -> time
-      _ -> elem(DateTime.from_iso8601(time), 1)
+      _ -> parse_time(time)
+    end
+  end
+
+  def parse_time(time) do
+    with t = DateTime.from_iso8601(time) do
+      elem(t, 1)
     end
   end
 
