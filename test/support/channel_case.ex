@@ -1,4 +1,4 @@
-defmodule ExchangeApi.ChannelCase do
+defmodule ExchangeApiWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,10 +21,20 @@ defmodule ExchangeApi.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import ExchangeApi.ChannelCase
+      import ExchangeApiWeb.ChannelCase
 
       # The default endpoint for testing
-      @endpoint ExchangeApi.Endpoint
+      @endpoint ExchangeApiWeb.Endpoint
     end
+  end
+
+  setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ExchangeApi.Repo)
+
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(ExchangeApi.Repo, {:shared, self()})
+    end
+
+    :ok
   end
 end

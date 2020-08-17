@@ -1,6 +1,4 @@
 defmodule ExchangeApiWeb.Telemetry do
-  @moduledoc false
-
   use Supervisor
   import Telemetry.Metrics
 
@@ -32,6 +30,13 @@ defmodule ExchangeApiWeb.Telemetry do
         unit: {:native, :millisecond}
       ),
 
+      # Database Metrics
+      summary("exchange_api.repo.query.total_time", unit: {:native, :millisecond}),
+      summary("exchange_api.repo.query.decode_time", unit: {:native, :millisecond}),
+      summary("exchange_api.repo.query.query_time", unit: {:native, :millisecond}),
+      summary("exchange_api.repo.query.queue_time", unit: {:native, :millisecond}),
+      summary("exchange_api.repo.query.idle_time", unit: {:native, :millisecond}),
+
       # VM Metrics
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
       summary("vm.total_run_queue_lengths.total"),
@@ -44,7 +49,7 @@ defmodule ExchangeApiWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {ExchangeWeb, :count_users, []}
+      # {ExchangeApiWeb, :count_users, []}
     ]
   end
 end
