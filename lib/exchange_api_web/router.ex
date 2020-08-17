@@ -15,6 +15,8 @@ defmodule ExchangeApiWeb.Router do
   scope "/", ExchangeApiWeb do
     pipe_through(:browser)
 
+    live "/", DashboardLive, :index
+
     scope "/ticker/:ticker" do
       scope "/orders" do
         get "/open", OrderController, :index_open

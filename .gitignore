@@ -35,3 +35,6 @@ npm-debug.log
 
 # Ignore ElixirLS extension files
 /.elixir_ls/
+
+# Ignore MacOS .DS_Store globally
+**/.DS_Store

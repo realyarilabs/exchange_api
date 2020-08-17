@@ -5,8 +5,8 @@ defmodule ExchangeApiWeb do
 
   This can be used in your application as:
 
-      use ExchangeWeb, :controller
-      use ExchangeWeb, :view
+      use ExchangeApiWeb, :controller
+      use ExchangeApiWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,7 +19,7 @@ defmodule ExchangeApiWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: ExchangeWeb
+      use Phoenix.Controller, namespace: ExchangeApiWeb
 
       import Plug.Conn
       import ExchangeApiWeb.Gettext
@@ -29,9 +29,33 @@ defmodule ExchangeApiWeb do
 
   def view do
     quote do
+      use Phoenix.View,
+        root: "lib/exchange_api_web/templates",
+        namespace: ExchangeApiWeb
+
       # Import convenience functions from controllers
       import Phoenix.Controller,
-        only: [get_flash: 1, get_flash: 2]
+        only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
+
+      # Include shared imports and aliases for views
+      unquote(view_helpers())
+    end
+  end
+
+  def live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {ExchangeApiWeb.LayoutView, "live.html"}
+
+      unquote(view_helpers())
+    end
+  end
+
+  def live_component do
+    quote do
+      use Phoenix.LiveComponent
+
+      unquote(view_helpers())
     end
   end
 
@@ -41,6 +65,7 @@ defmodule ExchangeApiWeb do
 
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 
@@ -48,6 +73,23 @@ defmodule ExchangeApiWeb do
     quote do
       use Phoenix.Channel
       import ExchangeApiWeb.Gettext
+    end
+  end
+
+  defp view_helpers do
+    quote do
+      # Use all HTML functionality (forms, tags, etc)
+      use Phoenix.HTML
+
+      # Import LiveView helpers (live_render, live_component, live_patch, etc)
+      import Phoenix.LiveView.Helpers
+
+      # Import basic rendering functionality (render, render_layout, etc)
+      import Phoenix.View
+
+      import ExchangeApiWeb.ErrorHelpers
+      import ExchangeApiWeb.Gettext
+      alias ExchangeApiWeb.Router.Helpers, as: Routes
     end
   end
 
