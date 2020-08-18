@@ -8,7 +8,6 @@ defmodule ExchangeApiWeb.DashboardLive do
     {:ok, total_buy_orders_AGUS} = Exchange.total_buy_orders(:AGUS)
 
     {:ok, assign(socket,
-      val: 72,
       time: NaiveDateTime.local_now(),
       total_buy_orders_AUXLND: total_buy_orders_AUXLND,
       total_buy_orders_AGUS: total_buy_orders_AGUS
