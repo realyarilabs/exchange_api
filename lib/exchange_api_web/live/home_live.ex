@@ -1,4 +1,4 @@
-defmodule ExchangeApiWeb.DashboardLive do
+defmodule ExchangeApiWeb.HomeLive do
   use ExchangeApiWeb, :live_view
   alias ExchangeApiWeb.Ticker
 
@@ -9,13 +9,14 @@ defmodule ExchangeApiWeb.DashboardLive do
     {:ok, total_sell_orders} = Exchange.total_sell_orders(:AUXLND)
     {:ok, open_orders} = Exchange.open_orders(:AUXLND)
 
-    {:ok, assign(socket,
-      ticker: "AUXLND",
-      time: NaiveDateTime.local_now(),
-      total_buy_orders: total_buy_orders,
-      total_sell_orders: total_sell_orders,
-      open_orders: open_orders
-    )}
+    {:ok,
+     assign(socket,
+       ticker: "AUXLND",
+       time: NaiveDateTime.local_now(),
+       total_buy_orders: total_buy_orders,
+       total_sell_orders: total_sell_orders,
+       open_orders: open_orders
+     )}
   end
 
   def handle_info(:tick, socket) do
@@ -24,12 +25,13 @@ defmodule ExchangeApiWeb.DashboardLive do
     {:ok, total_sell_orders} = Exchange.total_sell_orders(:AUXLND)
     {:ok, open_orders} = Exchange.open_orders(ticker)
 
-    {:noreply, assign(socket,
-      time: NaiveDateTime.local_now(),
-      total_buy_orders: total_buy_orders,
-      total_sell_orders: total_sell_orders,
-      open_orders: open_orders
-    )}
+    {:noreply,
+     assign(socket,
+       time: NaiveDateTime.local_now(),
+       total_buy_orders: total_buy_orders,
+       total_sell_orders: total_sell_orders,
+       open_orders: open_orders
+     )}
   end
 
   def handle_event("AUXLND", _, socket) do
@@ -37,12 +39,13 @@ defmodule ExchangeApiWeb.DashboardLive do
     {:ok, total_sell_orders} = Exchange.total_sell_orders(:AUXLND)
     {:ok, open_orders} = Exchange.open_orders(:AUXLND)
 
-    {:noreply, assign(socket,
-      ticker: "AUXLND",
-      total_buy_orders: total_buy_orders,
-      total_sell_orders: total_sell_orders,
-      open_orders: open_orders
-    )}
+    {:noreply,
+     assign(socket,
+       ticker: "AUXLND",
+       total_buy_orders: total_buy_orders,
+       total_sell_orders: total_sell_orders,
+       open_orders: open_orders
+     )}
   end
 
   def handle_event("AGUS", _, socket) do
@@ -50,11 +53,12 @@ defmodule ExchangeApiWeb.DashboardLive do
     {:ok, total_sell_orders} = Exchange.total_sell_orders(:AUXLND)
     {:ok, open_orders} = Exchange.open_orders(:AUXLND)
 
-    {:noreply, assign(socket,
-      ticker: "AGUS",
-      total_buy_orders: total_buy_orders,
-      total_sell_orders: total_sell_orders,
-      open_orders: open_orders
-    )}
+    {:noreply,
+     assign(socket,
+       ticker: "AGUS",
+       total_buy_orders: total_buy_orders,
+       total_sell_orders: total_sell_orders,
+       open_orders: open_orders
+     )}
   end
 end

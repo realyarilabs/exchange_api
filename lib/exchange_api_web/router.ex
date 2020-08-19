@@ -38,10 +38,13 @@ defmodule ExchangeApiWeb.Router do
     end
   end
 
-  scope "/", ExchangeApiWeb do
+  scope "/home", ExchangeApiWeb do
     pipe_through :browser
 
-    live "/dashboard", DashboardLive, :index
+    live "/", HomeLive, :index
+    live "/ticker/:ticker", OrderBookLive, :get
+    live "/ticker/:ticker/completed", CompletedTradesLive, :get
+    live "/ticker/:ticker/order/:order_id", OrderLive, :get
   end
 
   # Other scopes may use custom stacks.

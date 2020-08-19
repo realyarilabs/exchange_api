@@ -1,0 +1,53 @@
+<section class="phx-hero">
+    <h1>Order Book (<%= @ticker %>)</h1>
+</section>
+
+<h2> Sell orders: </h2>
+<table border=1 frame=hsides rules=rows>
+  <tr>
+    <th>Order ID</th>
+    <th>Trader ID</th>
+    <th>Exp Time</th>
+    <th>Init Size</th>
+    <th>Size</th>
+    <th>Price</th>
+    <th>Type</th>
+  </tr>
+  <%= for order <- @sell_orders do %>
+    <tr>
+      <td> <%= link(order.order_id, to: "/home/ticker/#{@ticker}/order/#{order.order_id}", method: :get) %> </td>
+      <td> <%= order.trader_id %> </td>
+      <td> <%= order.exp_time %> </td>
+      <td> <%= order.initial_size %> </td>
+      <td> <%= order.size %> </td>
+      <td> <%= order.price %> </td>
+      <td> <%= order.type %> </td>
+    </tr>
+  <% end %>
+</table>
+
+<h2> Buy orders: </h2>
+<table border=1 frame=hsides rules=rows>
+  <tr>
+    <th>Order ID</th>
+    <th>Trader ID</th>
+    <th>Exp Time</th>
+    <th>Init Size</th>
+    <th>Size</th>
+    <th>Price</th>
+    <th>Type</th>
+  </tr>
+  <%= for order <- @buy_orders do %>
+    <tr>
+      <td> <%= link(order.order_id, to: "/home/ticker/#{@ticker}/order/#{order.order_id}", method: :get) %> </td>
+      <td> <%= order.trader_id %> </td>
+      <td> <%= order.exp_time %> </td>
+      <td> <%= order.initial_size %> </td>
+      <td> <%= order.size %> </td>
+      <td> <%= order.price %> </td>
+      <td> <%= order.type %> </td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= button("Completed trades", to: "/home/ticker/#{@ticker}/completed", method: :get) %></p>

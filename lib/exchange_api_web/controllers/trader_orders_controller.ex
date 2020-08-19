@@ -9,7 +9,8 @@ defmodule ExchangeApiWeb.TraderOrdersController do
     end
   end
 
-  def index_completed(conn, %{"trader_id" => trader_id, "ticker" => ticker}) do #this wrong
+  # this wrong
+  def index_completed(conn, %{"trader_id" => trader_id, "ticker" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
       orders = Exchange.completed_trades_by_id(tick, trader_id)
       json(conn, %{data: orders})
@@ -46,6 +47,7 @@ defmodule ExchangeApiWeb.TraderOrdersController do
       }
 
       order_status = Exchange.place_order(order_raw, tick)
+
       case order_status do
         :ok -> json(conn, "Order placed.")
         _ -> put_status(conn, :bad_request) |> json("Failed to place order.")
@@ -57,6 +59,7 @@ defmodule ExchangeApiWeb.TraderOrdersController do
   def delete(conn, %{"id" => id, "ticker" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
       order_status = Exchange.cancel_order(id, tick)
+
       case order_status do
         :ok -> json(conn, "Order cancelled.")
         _ -> put_status(conn, :bad_request) |> json("Failed to cancel order.")
