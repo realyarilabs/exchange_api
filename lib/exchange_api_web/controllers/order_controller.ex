@@ -62,7 +62,7 @@ defmodule ExchangeApiWeb.OrderController do
   # ----- PRIVATE ----- #
 
   defp json_encode_money(money) do
-    {status, %Money{amount: ammount, currency: currency}} = money
-    %{status: status, data: %{ammount: ammount, currency: currency}}
+    {status, %Money{amount: amount, currency: currency}} = money
+    %{status: status, data: %{amount: amount, currency: currency}}
   end
 end

@@ -89,6 +89,7 @@ defmodule ExchangeApiWeb.TraderOrdersController do
     case type do
       "market" -> {:ok, :market}
       "limit" -> {:ok, :limit}
+      "marketable" -> {:ok, :marketable_limit}
       true -> {:error, "Type does not exist"}
     end
   end
