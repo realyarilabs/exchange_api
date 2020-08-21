@@ -45,6 +45,7 @@ defmodule ExchangeApiWeb.Router do
     live "/ticker/:ticker", OrderBookLive, :get
     live "/ticker/:ticker/completed", CompletedTradesLive, :get
     live "/ticker/:ticker/order/:order_id", OrderLive, :get
+    live "/ticker/:ticker/completed/trade/:trade_id", CompletedTradeLive, :get
   end
 
   # Other scopes may use custom stacks.
