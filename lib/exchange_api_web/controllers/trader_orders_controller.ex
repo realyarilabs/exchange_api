@@ -17,42 +17,32 @@ defmodule ExchangeApiWeb.TraderOrdersController do
     end
   end
 
-  def create(
-        conn,
-        %{
-          "order_id" => order_id,
-          "trader_id" => trader_id,
-          "side" => side,
-          "size" => size,
-          "price" => price,
-          "type" => type,
-          "ticker" => ticker
-        } = params
-      ) do
-    time = Map.get(params, "exp_time", nil)
-    exp = get_time(time)
+  def create(conn, params) do
+    ticker = Map.get(params, "ticker") |> String.to_atom()
 
-    with {:ok, side} <- get_side(side),
-         {:ok, tick} <- get_ticker(ticker),
-         {:ok, type} <- get_type(type) do
-      order_raw = %{
-        order_id: order_id,
-        trader_id: trader_id,
-        side: side,
-        size: size,
-        price: price,
-        type: type,
-        ticker: tick,
-        exp_time: exp
-      }
+    order_params = %{
+      order_id: Map.get(params, "order_id"),
+      trader_id: Map.get(params, "trader_id"),
+      side: Map.get(params, "side") |> String.to_atom(),
+      price: Map.get(params, "price"),
+      size: Map.get(params, "size"),
+      initial_size: Map.get(params, "initial_size"),
+      type: Map.get(params, "type") |> String.to_atom(),
+      exp_time: Map.get(params, "exp_time", nil) |> DateTime.from_unix(:millisecond) |> elem(1),
+      acknowledged_at: DateTime.utc_now() |> DateTime.to_unix(:nanosecond),
+      modified_at: DateTime.utc_now() |> DateTime.to_unix(:nanosecond),
+      ticker: Map.get(params, "ticker") |> String.to_atom()
+    }
 
-      order_status = Exchange.place_order(order_raw, tick)
+    order_status = Exchange.place_order(order_params, ticker)
 
+    response =
       case order_status do
         :ok -> json(conn, "Order placed.")
         _ -> put_status(conn, :bad_request) |> json("Failed to place order.")
       end
-    end
+
+    response
   end
 
   @spec delete(any, map) :: any
@@ -94,18 +84,13 @@ defmodule ExchangeApiWeb.TraderOrdersController do
     end
   end
 
-  defp get_time(time) do
-    case time do
-      nil -> time
-      _ -> parse_time(time)
-    end
-  end
-
-  def parse_time(time) do
-    with {:ok, time, 0} = DateTime.from_iso8601(time) do
+  def parse_time(timestamp, unit) when is_integer(timestamp) do
+    with {:ok, time} = DateTime.from_unix(timestamp, unit) do
       time
     end
   end
+
+  def parse_time(time, _unit), do: time
 
   defp set_http_status(conn, {status, data}) do
     f = fn conn ->
