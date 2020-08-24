@@ -1,3 +1,63 @@
-<section class="phx-hero">
-    <h1>Work in progress. Still cooking up.</h1>
-</section>
+<%= if @trade != nil do %>
+ <section class="phx-hero">
+  <h1>Trade</h1>
+  <h2><%= @trade.trade_id %></h2>
+  <h2>(<%= @ticker %>)</h2>
+ </section>
+
+ <h2> Trade info: </h2>
+  <table>
+   <tbody>
+     <tr>
+      <th scope="row">Price</th>
+      <td> <%= @trade.price %> </td>
+     </tr>
+     <tr>
+      <th scope="row">Size</th>
+      <td> <%= @trade.size %> </td>
+     </tr>
+     <tr>
+      <th scope="row">Currency</th>
+      <td> <%= @trade.currency %> </td>
+     </tr>
+     <tr>
+      <th scope="row">Ack</th>
+      <td><%= @trade.acknowledged_at %></td>
+     </tr>
+     <tr>
+      <th scope="row">Ticker</th>
+      <td> <%= @trade.ticker %> </td>
+     </tr>
+     <tr>
+      <th scope="row">Buyer ID</th>
+      <td> <%= @trade.buyer_id %> </td>
+     </tr>
+     <tr>
+      <th scope="row">Buy order ID</th>
+      <td><%= @trade.buy_order_id %></td>
+     </tr>
+     <tr>
+      <th scope="row">Buy order initial size</th>
+      <td><%= @trade.buy_init_size %></td>
+     </tr>
+     <tr>
+      <th scope="row">Seller ID</th>
+      <td> <%= @trade.seller_id %> </td>
+     </tr>
+     <tr>
+      <th scope="row">Sell order ID</th>
+      <td> <%= @trade.sell_order_id %> </td>
+     </tr>
+     <tr>
+      <th scope="row">Sell order initial size</th>
+      <td> <%= @trade.sell_init_size %> </td>
+     </tr>
+     <tr>
+      <th scope="row">Type</th>
+      <td> <%= @trade.type %> </td>
+     </tr>
+   </tbody>
+ </table>
+<% else %>
+  Trade does not exist.
+<% end %>

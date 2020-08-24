@@ -4,11 +4,12 @@ defmodule ExchangeApiWeb.CompletedTradeLive do
 
   def mount(%{"trade_id" => trade_id, "ticker" => ticker}, _session, socket) do
     {:ok, tick} = Ticker.get_ticker(ticker)
+    trade = Exchange.completed_trade_by_trade_id(tick, trade_id)
 
     {:ok,
      assign(socket,
-     trade_id: trade_id,
-     ticker: tick
+     ticker: tick,
+     trade: trade
      )}
   end
 end

@@ -43,8 +43,8 @@ defmodule ExchangeApi.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:exchange, "~> 0.2.1"},
-      {:httpoison, "~> 1.7"}
+      {:httpoison, "~> 1.7"},
+      {:exchange, github: "realyarilabs/exchange", branch: "develop"}
     ]
   end
 end
