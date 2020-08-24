@@ -1,63 +1,91 @@
 <%= if @trade != nil do %>
- <section class="phx-hero">
-  <h1>Trade</h1>
-  <h2><%= @trade.trade_id %></h2>
-  <h2>(<%= @ticker %>)</h2>
- </section>
 
- <h2> Trade info: </h2>
-  <table>
-   <tbody>
-     <tr>
-      <th scope="row">Price</th>
-      <td> <%= @trade.price %> </td>
-     </tr>
-     <tr>
-      <th scope="row">Size</th>
-      <td> <%= @trade.size %> </td>
-     </tr>
-     <tr>
-      <th scope="row">Currency</th>
+<h1 class="ui dividing header">Trade</h1>
+<p><b>Trade ID: </b><%= @trade.trade_id %></p>
+<div class="ui container">
+ <table class="ui celled striped table">
+  <thead>
+    <tr><th colspan="3">
+      Trade Information
+    </th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td class="collapsing">
+        Price
+      </td>
+      <td><%= @trade.price %></td>
+    </tr>
+    <tr>
+      <td>
+        Size
+      </td>
+      <td><%= @trade.size %></td>
+    </tr>
+    <tr>
+      <td>
+        Currency
+      </td>
       <td> <%= @trade.currency %> </td>
-     </tr>
-     <tr>
-      <th scope="row">Ack</th>
-      <td><%= @trade.acknowledged_at %></td>
-     </tr>
-     <tr>
-      <th scope="row">Ticker</th>
-      <td> <%= @trade.ticker %> </td>
-     </tr>
-     <tr>
-      <th scope="row">Buyer ID</th>
+    </tr>
+    <tr>
+      <td>
+        Acknowledgement
+      </td>
+      <td> <%= @trade.acknowledged_at %> </td>
+    </tr>
+    <tr>
+      <td>
+        Buyer ID
+      </td>
       <td> <%= @trade.buyer_id %> </td>
-     </tr>
-     <tr>
-      <th scope="row">Buy order ID</th>
-      <td><%= @trade.buy_order_id %></td>
-     </tr>
-     <tr>
-      <th scope="row">Buy order initial size</th>
-      <td><%= @trade.buy_init_size %></td>
-     </tr>
-     <tr>
-      <th scope="row">Seller ID</th>
+    </tr>
+    <tr>
+      <td>
+        Buy order ID
+      </td>
+      <td> <%= @trade.buy_order_id %> </td>
+    </tr>
+    <tr>
+      <td>
+        Buy order initial size
+      </td>
+      <td> <%= @trade.buy_init_size %> </td>
+    </tr>
+    <tr>
+      <td>
+        Seller ID
+      </td>
       <td> <%= @trade.seller_id %> </td>
-     </tr>
-     <tr>
-      <th scope="row">Sell order ID</th>
+    </tr>
+    <tr>
+      <td>
+        Sell order ID
+      </td>
       <td> <%= @trade.sell_order_id %> </td>
-     </tr>
-     <tr>
-      <th scope="row">Sell order initial size</th>
+    </tr>
+    <tr>
+      <td>
+        Sell order initial size
+      </td>
       <td> <%= @trade.sell_init_size %> </td>
-     </tr>
-     <tr>
-      <th scope="row">Type</th>
+    </tr>
+    <tr>
+      <td>
+        Type
+      </td>
       <td> <%= @trade.type %> </td>
-     </tr>
-   </tbody>
- </table>
+    </tr>
+    <tr>
+      <td>
+        Ticker
+      </td>
+      <td> <%= @ticker %> </td>
+    </tr>
+  </tbody>
+</table>
+<p></p>
+</div>
 <% else %>
   Trade does not exist.
 <% end %>

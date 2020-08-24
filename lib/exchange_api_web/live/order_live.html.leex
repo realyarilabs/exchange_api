@@ -1,54 +1,79 @@
-
 <%= if @order != nil do %>
-  <section class="phx-hero">
-    <h1>Order (<%= @order.order_id %>)</h1>
-  </section>
 
-  <h2> Order info: </h2>
-  <table>
-    <tbody>
-      <tr>
-        <th scope="row">Ack</th>
-        <td><%= @order.acknowledged_at %></td>
-      </tr>
-      <tr>
-        <th scope="row">Exp Time</th>
-        <td><%= @order.exp_time %></td>
-      </tr>
-      <tr>
-        <th scope="row">Init Size</th>
-        <td><%= @order.initial_size %></td>
-      </tr>
-      <tr>
-        <th scope="row">Modified at</th>
-        <td> <%= @order.modified_at %> </td>
-      </tr>
-      <tr>
-        <th scope="row">Price</th>
-        <td> <%= @order.price %> </td>
-      </tr>
-      <tr>
-        <th scope="row">Side</th>
-        <td> <%= @order.side %> </td>
-      </tr>
-      <tr>
-        <th scope="row">Size</th>
-        <td> <%= @order.size %> </td>
-      </tr>
-      <tr>
-        <th scope="row">Ticker</th>
-        <td> <%= @order.ticker %> </td>
-      </tr>
-      <tr>
-        <th scope="row">Trader</th>
-        <td> <%= @order.trader_id %> </td>
-      </tr>
-      <tr>
-        <th scope="row">Type</th>
-        <td> <%= @order.type %> </td>
-      </tr>
-    </tbody>
-  </table>
+<h1 class="ui dividing header">Order</h1>
+<p><b>Order ID: </b><%= @order.order_id %></p>
+<div class="ui container">
+ <table class="ui celled striped table">
+  <thead>
+    <tr><th colspan="3">
+      Order Information
+    </th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td class="collapsing">
+        Acknowledgement
+      </td>
+      <td><%= @order.acknowledged_at %></td>
+    </tr>
+    <tr>
+      <td>
+        Expiration
+      </td>
+      <td><%= @order.exp_time %></td>
+    </tr>
+    <tr>
+      <td>
+        Initial size
+      </td>
+      <td> <%= @order.initial_size %> </td>
+    </tr>
+    <tr>
+      <td>
+        Modified at
+      </td>
+      <td> <%=@order.modified_at %> </td>
+    </tr>
+    <tr>
+      <td>
+        Price
+      </td>
+      <td> <%= @order.price %> </td>
+    </tr>
+    <tr>
+      <td>
+        Side
+      </td>
+      <td> <%= @order.side %> </td>
+    </tr>
+    <tr>
+      <td>
+        Size
+      </td>
+      <td> <%= @order.size %> </td>
+    </tr>
+    <tr>
+      <td>
+        Ticker
+      </td>
+      <td> <%= @order.ticker %> </td>
+    </tr>
+    <tr>
+      <td>
+        Trader
+      </td>
+      <td> <%= @order.trader_id %> </td>
+    </tr>
+    <tr>
+      <td>
+        Type
+      </td>
+      <td> <%= @order.type %> </td>
+    </tr>
+  </tbody>
+</table>
+<p></p>
+</div>
 <% else %>
     Order does not exist.
 <% end %>
