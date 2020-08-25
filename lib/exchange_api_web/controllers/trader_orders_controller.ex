@@ -19,6 +19,13 @@ defmodule ExchangeApiWeb.TraderOrdersController do
 
   def create(conn, params) do
     ticker = Map.get(params, "ticker") |> String.to_atom()
+    exp_time = Map.get(params, "exp_time", nil)
+
+    exp_time =
+      cond do
+        is_integer(exp_time) -> DateTime.from_unix(exp_time, :millisecond) |> elem(1)
+        true -> exp_time
+      end
 
     order_params = %{
       order_id: Map.get(params, "order_id"),
@@ -28,7 +35,7 @@ defmodule ExchangeApiWeb.TraderOrdersController do
       size: Map.get(params, "size"),
       initial_size: Map.get(params, "initial_size"),
       type: Map.get(params, "type") |> String.to_atom(),
-      exp_time: Map.get(params, "exp_time", nil) |> DateTime.from_unix(:millisecond) |> elem(1),
+      exp_time: exp_time,
       acknowledged_at: DateTime.utc_now() |> DateTime.to_unix(:nanosecond),
       modified_at: DateTime.utc_now() |> DateTime.to_unix(:nanosecond),
       ticker: Map.get(params, "ticker") |> String.to_atom()
