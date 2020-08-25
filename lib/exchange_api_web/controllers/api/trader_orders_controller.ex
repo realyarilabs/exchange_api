@@ -1,4 +1,4 @@
-defmodule ExchangeApiWeb.TraderOrdersController do
+defmodule ExchangeApiWeb.Api.TraderOrdersController do
   use ExchangeApiWeb, :controller
 
   action_fallback ExchangeApiWeb.FallbackController
@@ -19,7 +19,11 @@ defmodule ExchangeApiWeb.TraderOrdersController do
 
   def create(conn, params) do
     ticker = Map.get(params, "ticker") |> String.to_atom()
-
+    exp_time = Map.get(params, "exp_time", nil)
+    exp_time = cond do
+        is_integer(exp_time) -> DateTime.from_unix(exp_time, :millisecond) |> elem(1)
+        true -> exp_time
+    end
     order_params = %{
       order_id: Map.get(params, "order_id"),
       trader_id: Map.get(params, "trader_id"),
@@ -28,20 +32,17 @@ defmodule ExchangeApiWeb.TraderOrdersController do
       size: Map.get(params, "size"),
       initial_size: Map.get(params, "initial_size"),
       type: Map.get(params, "type") |> String.to_atom(),
-      exp_time: Map.get(params, "exp_time", nil) |> DateTime.from_unix(:millisecond) |> elem(1),
+      exp_time: exp_time,
       acknowledged_at: DateTime.utc_now() |> DateTime.to_unix(:nanosecond),
       modified_at: DateTime.utc_now() |> DateTime.to_unix(:nanosecond),
       ticker: Map.get(params, "ticker") |> String.to_atom()
     }
-
     order_status = Exchange.place_order(order_params, ticker)
-
     response =
       case order_status do
         :ok -> json(conn, "Order placed.")
         _ -> put_status(conn, :bad_request) |> json("Failed to place order.")
       end
-
     response
   end
 
@@ -64,23 +65,6 @@ defmodule ExchangeApiWeb.TraderOrdersController do
       "AUXLND" -> {:ok, :AUXLND}
       "AGUS" -> {:ok, :AGUS}
       _ -> {:error, "Ticker does not exist"}
-    end
-  end
-
-  defp get_side(side) do
-    case side do
-      "sell" -> {:ok, :sell}
-      "buy" -> {:ok, :buy}
-      true -> {:error, "Side does not exist"}
-    end
-  end
-
-  defp get_type(type) do
-    case type do
-      "market" -> {:ok, :market}
-      "limit" -> {:ok, :limit}
-      "marketable" -> {:ok, :marketable_limit}
-      true -> {:error, "Type does not exist"}
     end
   end
 

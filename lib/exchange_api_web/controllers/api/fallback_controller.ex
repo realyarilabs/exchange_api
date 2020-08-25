@@ -1,4 +1,4 @@
-defmodule ExchangeApiWeb.FallbackController do
+defmodule ExchangeApiWeb.Api.FallbackController do
   use ExchangeApiWeb, :controller
 
   def call(conn, {:error, msg}) do

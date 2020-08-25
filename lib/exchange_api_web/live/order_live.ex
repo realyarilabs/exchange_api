@@ -8,6 +8,8 @@ defmodule ExchangeApiWeb.OrderLive do
 
     {:ok,
      assign(socket,
+       ticker: tick,
+       order_id: order_id,
        order: order
      )}
   end

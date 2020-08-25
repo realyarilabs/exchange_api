@@ -1,7 +1,7 @@
 <%= if @order != nil do %>
 
 <h1 class="ui dividing header">Order</h1>
-<p><b>Order ID: </b><%= @order.order_id %></p>
+<p><b>Order ID: </b><%= @order_id %></p>
 <div class="ui container">
  <table class="ui celled striped table">
   <thead>
@@ -77,3 +77,5 @@
 <% else %>
     Order does not exist.
 <% end %>
+
+<%= button("Cancel Order", to: "/home/ticker/#{@ticker}/order/#{@order_id}/cancel", method: :delete, class: "ui right floated button", style: "margin-top:10px" ) %>
