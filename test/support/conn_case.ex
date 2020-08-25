@@ -1,4 +1,4 @@
-defmodule ExchangeApi.ConnCase do
+defmodule ExchangeApiWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -22,12 +22,16 @@ defmodule ExchangeApi.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import ExchangeApi.ConnCase
+      import ExchangeApiWeb.ConnCase
 
-      alias ExchangeApi.Router.Helpers, as: Routes
+      alias ExchangeApiWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint ExchangeApi.Endpoint
+      @endpoint ExchangeApiWeb.Endpoint
     end
+  end
+
+  setup tags do
+    {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

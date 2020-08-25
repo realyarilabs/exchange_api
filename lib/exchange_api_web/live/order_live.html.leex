@@ -1,0 +1,53 @@
+
+<%= if @order != nil do %>
+  <section class="phx-hero">
+    <h1>Order (<%= @order.order_id %>)</h1>
+  </section>
+
+  <h2> Order info: </h2>
+  <table>
+    <tbody>
+      <tr>
+        <th scope="row">Ack</th>
+        <td><%= @order.acknowledged_at %></td>
+      </tr>
+      <tr>
+        <th scope="row">Exp Time</th>
+        <td><%= @order.exp_time %></td>
+      </tr>
+      <tr>
+        <th scope="row">Init Size</th>
+        <td><%= @order.initial_size %></td>
+      </tr>
+      <tr>
+        <th scope="row">Modified at</th>
+        <td> <%= @order.modified_at %> </td>
+      </tr>
+      <tr>
+        <th scope="row">Price</th>
+        <td> <%= @order.price %> </td>
+      </tr>
+      <tr>
+        <th scope="row">Side</th>
+        <td> <%= @order.side %> </td>
+      </tr>
+      <tr>
+        <th scope="row">Size</th>
+        <td> <%= @order.size %> </td>
+      </tr>
+      <tr>
+        <th scope="row">Ticker</th>
+        <td> <%= @order.ticker %> </td>
+      </tr>
+      <tr>
+        <th scope="row">Trader</th>
+        <td> <%= @order.trader_id %> </td>
+      </tr>
+      <tr>
+        <th scope="row">Type</th>
+        <td> <%= @order.type %> </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+Order does not exist.

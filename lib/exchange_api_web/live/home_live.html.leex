@@ -1,0 +1,19 @@
+<section class="phx-hero">
+    <h1><%= gettext "Welcome to %{name}!", name: "Alchemist API" %></h1>
+    <div class="bar">
+        <span><%= @time %></span>
+    </div>
+</section>
+
+<style>
+  div {text-align: center;}
+  h2 {text-align: center;}
+</style>
+
+<h2> Choose your ticker: </h2>
+<div class="tickers">
+    <div class="controls">
+      <p> <%= button("AUXLND", to: "/home/ticker/AUXLND", method: :get) %> </p>
+      <p> <%= button("AGUS", to: "/home/ticker/AGUS", method: :get) %> </p>
+    </div>
+</div>

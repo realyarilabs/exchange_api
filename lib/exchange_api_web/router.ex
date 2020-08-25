@@ -2,18 +2,20 @@ defmodule ExchangeApiWeb.Router do
   use ExchangeApiWeb, :router
 
   pipeline :browser do
-    plug(:accepts, ["html"])
-    plug(:fetch_session)
-    plug(:fetch_flash)
-    plug(:put_secure_browser_headers)
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {ExchangeApiWeb.LayoutView, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
   end
 
   pipeline :api do
-    plug(:accepts, ["json"])
+    plug :accepts, ["json"]
   end
 
   scope "/", ExchangeApiWeb do
-    pipe_through(:browser)
+    pipe_through :api
 
     scope "/ticker/:ticker" do
       scope "/orders" do
@@ -36,6 +38,15 @@ defmodule ExchangeApiWeb.Router do
     end
   end
 
+  scope "/home", ExchangeApiWeb do
+    pipe_through :browser
+
+    live "/", HomeLive, :index
+    live "/ticker/:ticker", OrderBookLive, :get
+    live "/ticker/:ticker/completed", CompletedTradesLive, :get
+    live "/ticker/:ticker/order/:order_id", OrderLive, :get
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ExchangeWeb do
   #   pipe_through :api
@@ -52,8 +63,8 @@ defmodule ExchangeApiWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through(:browser)
-      live_dashboard("/dashboard", metrics: ExchangeApiWeb.Telemetry)
+      pipe_through :browser
+      live_dashboard "/dashboardz", metrics: ExchangeApiWeb.Telemetry
     end
   end
 end
