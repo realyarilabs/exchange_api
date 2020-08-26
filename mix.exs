@@ -44,7 +44,13 @@ defmodule ExchangeApi.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:exchange, "~> 0.2.1"},
-      {:httpoison, "~> 1.7"}
+      {:httpoison, "~> 1.7"},
+      {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 1.0"},
+      {:guardian, "~> 1.0"},
+      {:phoenix_ecto, "~> 4.1"},
+      {:ecto_sql, "~> 3.4"},
+      {:postgrex, ">= 0.0.0"}
     ]
   end
 end

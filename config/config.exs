@@ -10,6 +10,14 @@ use Mix.Config
 config :exchange_api,
   ecto_repos: []
 
+config :exchange_api, ExchangeApi.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "alchemist",
+  hostname: "localhost",
+  pool_size: 10
+
 # Configures the endpoint
 config :exchange_api, ExchangeApiWeb.Endpoint,
   url: [host: "localhost"],
