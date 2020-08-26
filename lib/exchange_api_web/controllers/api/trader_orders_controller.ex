@@ -20,10 +20,11 @@ defmodule ExchangeApiWeb.Api.TraderOrdersController do
   def create(conn, params) do
     ticker = Map.get(params, "ticker") |> String.to_atom()
     exp_time = Map.get(params, "exp_time", nil)
-    exp_time = cond do
+    exp_time =
+      cond do
         is_integer(exp_time) -> DateTime.from_unix(exp_time, :millisecond) |> elem(1)
         true -> exp_time
-    end
+      end
     order_params = %{
       order_id: Map.get(params, "order_id"),
       trader_id: Map.get(params, "trader_id"),

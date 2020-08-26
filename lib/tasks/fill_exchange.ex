@@ -58,7 +58,7 @@ defmodule Mix.Tasks.FillExchange do
       | exp_time: order.exp_time + 10_000_000_000
     }
 
-    url = "http://localhost:4000/ticker/AUXLND/traders/#{order.trader_id}/orders"
+    url = "http://localhost:4000/ticker/#{ticker}/traders/#{order.trader_id}/orders"
 
     HTTPoison.post(
       url,
