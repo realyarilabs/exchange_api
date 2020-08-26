@@ -6,13 +6,15 @@ defmodule ExchangeApiWeb.UserControllerTest do
 
   @create_attrs %{
     email: "some email",
-    jwt: "some jwt"
+    jwt: "some jwt",
+    uuid: "some uuid"
   }
   @update_attrs %{
     email: "some updated email",
-    jwt: "some updated jwt"
+    jwt: "some updated jwt",
+    uuid: "some updated uuid"
   }
-  @invalid_attrs %{email: nil, jwt: nil}
+  @invalid_attrs %{email: nil, jwt: nil, uuid: nil}
 
   def fixture(:user) do
     {:ok, user} = Accounts.create_user(@create_attrs)
@@ -40,7 +42,8 @@ defmodule ExchangeApiWeb.UserControllerTest do
       assert %{
                "id" => id,
                "email" => "some email",
-               "jwt" => "some jwt"
+               "jwt" => "some jwt",
+               "uuid" => "some uuid"
              } = json_response(conn, 200)["data"]
     end
 
@@ -62,7 +65,8 @@ defmodule ExchangeApiWeb.UserControllerTest do
       assert %{
                "id" => id,
                "email" => "some updated email",
-               "jwt" => "some updated jwt"
+               "jwt" => "some updated jwt",
+               "uuid" => "some updated uuid"
              } = json_response(conn, 200)["data"]
     end
 

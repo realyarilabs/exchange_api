@@ -15,7 +15,7 @@ defmodule ExchangeApiWeb.UserController do
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       conn
-      |> render("jwt.json", %{jwt: token})
+      |> render("user.jwt.json", %{user: user})
     end
   end
 

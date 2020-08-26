@@ -4,11 +4,12 @@ defmodule ExchangeApi.Accounts do
   """
 
   import Ecto.Query, warn: false
+
   alias ExchangeApi.Repo
 
   alias ExchangeApi.Accounts.User
   alias ExchangeApi.Guardian
-  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import Comeonin.Bcrypt, only: [dummy_checkpw: 0]
 
   @doc """
   Returns the list of users.
@@ -52,8 +53,11 @@ defmodule ExchangeApi.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
-    {:ok, token, _claims} = Guardian.encode_and_sign(user)
-    attrs = Map.put(user_params, "jwt", token)
+    uuid = Ecto.UUID.generate()
+
+    {:ok, token, _} = Guardian.encode_and_sign(uuid)
+    attrs = Map.put(attrs, "uuid", uuid)
+    attrs = Map.put(attrs, "jwt", token)
 
     %User{}
     |> User.changeset(attrs)
@@ -109,7 +113,7 @@ defmodule ExchangeApi.Accounts do
 
   def verify_user(token) do
     case get_by_token(token) do
-      {:ok, user} ->
+      {:ok, _user} ->
         :ok
 
       _ ->

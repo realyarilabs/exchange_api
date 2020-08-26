@@ -14,7 +14,7 @@ defmodule ExchangeApiWeb.UserView do
     %{id: user.id, email: user.email, jwt: user.jwt}
   end
 
-  def render("jwt.json", %{jwt: jwt}) do
-    %{jwt: jwt}
+  def render("user.jwt.json", %{user: user}) do
+    %{jwt: user.jwt}
   end
 end

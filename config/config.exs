@@ -13,10 +13,11 @@ config :exchange_api,
 config :exchange_api, ExchangeApi.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: System.get_env("POSTGRES_USER"),
-  password: System.get_env("POSTGRES_PASS")
-  database: System.get_env("POSTGRES_DB")
-  hostname: System.get_env("POSTGRES_HOST")
-  pool_size: System.get_env("POSTGRES_POOL_SIZE")
+  password: System.get_env("POSTGRES_PASS"),
+  database: System.get_env("POSTGRES_DB"),
+  hostname: System.get_env("POSTGRES_HOST"),
+  pool_size: System.get_env("POSTGRES_POOL_SIZE") |> String.to_integer()
+
 config :exchange_api, ExchangeApi.Guardian,
   issuer: "exchange_api",
   secret_key: System.get_env("GUARDIAN_SECRET")
@@ -36,7 +37,6 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

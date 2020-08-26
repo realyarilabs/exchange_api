@@ -1,6 +1,6 @@
-POSTGRES_USER=postgres
-POSTGRES_PASS=postgres
-POSTGRES_DB=alchemist
-POSTGRES_HOST=localhost
-POSTGRES_POOL_SIZE=10
-GUARDIAN_SECRET=QXYv3bQuBX8zKhtPiNSrzf+W/zVMSRxcXdRJYWCTo6xo4l3LAgs2C+md84u/sP2n
+export POSTGRES_USER=postgres
+export POSTGRES_PASS=postgres
+export POSTGRES_DB=alchemist
+export POSTGRES_HOST=localhost
+export POSTGRES_POOL_SIZE=10
+export GUARDIAN_SECRET=QXYv3bQuBX8zKhtPiNSrzf+W/zVMSRxcXdRJYWCTo6xo4l3LAgs2C+md84u/sP2n
