@@ -7,7 +7,7 @@ defmodule ExchangeApi.Accounts do
   alias ExchangeApi.Repo
 
   alias ExchangeApi.Accounts.User
-  alias MyApi.Guardian
+  alias ExchangeApi.Guardian
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   @doc """
@@ -52,6 +52,9 @@ defmodule ExchangeApi.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+    attrs = Map.put(user_params, "jwt", token)
+
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()

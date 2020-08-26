@@ -13,14 +13,7 @@ defmodule ExchangeApiWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    user_params = Map.put(user_params, "jwt", "")
-
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params),
-         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
-      user_params = Map.put(user_params, "jwt", token)
-
-      Accounts.update_user(user, user_params)
-
+    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       conn
       |> render("jwt.json", %{jwt: token})
     end

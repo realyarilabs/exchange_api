@@ -12,15 +12,14 @@ config :exchange_api,
 
 config :exchange_api, ExchangeApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "alchemist",
-  hostname: "localhost",
-  pool_size: 10
-
+  username: System.get_env("POSTGRES_USER"),
+  password: System.get_env("POSTGRES_PASS")
+  database: System.get_env("POSTGRES_DB")
+  hostname: System.get_env("POSTGRES_HOST")
+  pool_size: System.get_env("POSTGRES_POOL_SIZE")
 config :exchange_api, ExchangeApi.Guardian,
   issuer: "exchange_api",
-  secret_key: "QXYv3bQuBX8zKhtPiNSrzf+W/zVMSRxcXdRJYWCTo6xo4l3LAgs2C+md84u/sP2n"
+  secret_key: System.get_env("GUARDIAN_SECRET")
 
 # Configures the endpoint
 config :exchange_api, ExchangeApiWeb.Endpoint,
