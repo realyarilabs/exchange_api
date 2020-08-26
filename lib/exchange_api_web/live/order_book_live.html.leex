@@ -2,8 +2,22 @@
 
 <div class="ui container">
   <h3> Sell Orders: </h3>
-  <p><b>Last Price: </b> <%= @last_price_sell %> </p>
-  <p><b>Last Size: </b> <%= @last_size_sell %> </p>
+
+  <table class="ui very basic table">
+    <thead>
+      <tr>
+        <th>Last Price</th>
+        <th>Last Size</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @last_price_sell %></td>
+        <td><%= @last_size_sell %></td>
+      </tr>
+    </tbody>
+  </table>
+
   <table class="ui celled table">
     <thead>
       <tr>
@@ -33,30 +47,76 @@
 </div>
 
   <h3> Buy Orders: </h3>
-  <p><b>Last Price: </b> <%= @last_price_buy %> </p>
-  <p><b>Last Size: </b> <%= @last_size_buy %> </p>
+
+  <table class="ui very basic table">
+    <thead>
+      <tr>
+        <th>Last Price</th>
+        <th>Last Size</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @last_price_buy %></td>
+        <td><%= @last_size_buy %></td>
+      </tr>
+    </tbody>
+  </table>
+
   <table class="ui celled table">
+    <thead>
+      <th>Order ID</th>
+      <th>Trader ID</th>
+      <th>Exp Time</th>
+      <th>Init Size</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Type</th>
+    </thead>
+    <tbody>
+      <%= for order <- @buy_orders do %>
+        <tr>
+          <td> <%= link(order.order_id, to: "/home/ticker/#{@ticker}/order/#{order.order_id}", method: :get) %> </td>
+          <td> <%= order.trader_id %> </td>
+          <td> <%= order.exp_time %> </td>
+          <td> <%= order.initial_size %> </td>
+          <td> <%= order.size %> </td>
+          <td> <%= order.price %> </td>
+          <td> <%= order.type %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+<h2 class="ui dividing header">Extras</h2>
+<br>
+<table class="ui very basic table">
   <thead>
-    <th>Order ID</th>
-    <th>Trader ID</th>
-    <th>Exp Time</th>
-    <th>Init Size</th>
-    <th>Size</th>
-    <th>Price</th>
-    <th>Type</th>
+    <tr>
+      <th>Lowest Ask Price</th>
+      <th>Highest Bid Price</th>
+    </tr>
   </thead>
   <tbody>
-    <%= for order <- @buy_orders do %>
-      <tr>
-        <td> <%= link(order.order_id, to: "/home/ticker/#{@ticker}/order/#{order.order_id}", method: :get) %> </td>
-        <td> <%= order.trader_id %> </td>
-        <td> <%= order.exp_time %> </td>
-        <td> <%= order.initial_size %> </td>
-        <td> <%= order.size %> </td>
-        <td> <%= order.price %> </td>
-        <td> <%= order.type %> </td>
-      </tr>
-    <% end %>
+    <tr>
+      <td><%= @lowest_ask_price %></td>
+      <td><%= @highest_bid_price %></td>
+    </tr>
   </tbody>
 </table>
-<%= button("Completed trades", to: "/home/ticker/#{@ticker}/completed", method: :get, class: "ui right floated button", style: "margin-top:10px" ) %>
+
+<table class="ui very basic table">
+  <thead>
+    <tr>
+      <th>Highest Ask Volume</th>
+      <th>Highest Bid Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @highest_ask_volume %></td>
+      <td><%= @highest_bid_volume %></td>
+    </tr>
+  </tbody>
+</table>
+<%= button("Completed trades", to: "/home/ticker/#{@ticker}/completed", method: :get, class: "ui right floated button", style: "margin-top:10px") %>

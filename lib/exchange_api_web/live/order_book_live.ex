@@ -11,6 +11,11 @@ defmodule ExchangeApiWeb.OrderBookLive do
     {:ok, last_price_buy} = Exchange.last_price(tick, :buy)
     {:ok, last_size_sell} = Exchange.last_size(tick, :sell)
     {:ok, last_size_buy} = Exchange.last_size(tick, :buy)
+    {:ok, spread} = Exchange.spread(tick)
+    {:ok, highest_ask_volume} = Exchange.highest_ask_volume(tick)
+    {:ok, lowest_ask_price} = Exchange.lowest_ask_price(tick)
+    {:ok, highest_bid_volume} = Exchange.highest_bid_volume(tick)
+    {:ok, highest_bid_price} = Exchange.highest_bid_price(tick)
 
     sell_orders = open_orders |> Enum.filter(fn order -> order.side == :sell end)
     buy_orders = open_orders |> Enum.filter(fn order -> order.side == :buy end)
@@ -23,7 +28,12 @@ defmodule ExchangeApiWeb.OrderBookLive do
        last_size_sell: last_size_sell,
        last_size_buy: last_size_buy,
        sell_orders: sell_orders,
-       buy_orders: buy_orders
+       buy_orders: buy_orders,
+       spread: spread,
+       highest_ask_volume: highest_ask_volume,
+       lowest_ask_price: lowest_ask_price,
+       highest_bid_volume: highest_bid_volume,
+       highest_bid_price: highest_bid_price
      )}
   end
 
@@ -34,6 +44,11 @@ defmodule ExchangeApiWeb.OrderBookLive do
     {:ok, last_price_buy} = Exchange.last_price(ticker, :buy)
     {:ok, last_size_sell} = Exchange.last_size(ticker, :sell)
     {:ok, last_size_buy} = Exchange.last_size(ticker, :buy)
+    {:ok, spread} = Exchange.spread(ticker)
+    {:ok, highest_ask_volume} = Exchange.highest_ask_volume(ticker)
+    {:ok, lowest_ask_price} = Exchange.lowest_ask_price(ticker)
+    {:ok, highest_bid_volume} = Exchange.highest_bid_volume(ticker)
+    {:ok, highest_bid_price} = Exchange.highest_bid_price(ticker)
 
     sell_orders = open_orders |> Enum.filter(fn order -> order.side == :sell end)
     buy_orders = open_orders |> Enum.filter(fn order -> order.side == :buy end)
@@ -45,7 +60,12 @@ defmodule ExchangeApiWeb.OrderBookLive do
        last_size_sell: last_size_sell,
        last_size_buy: last_size_buy,
        sell_orders: sell_orders,
-       buy_orders: buy_orders
+       buy_orders: buy_orders,
+       spread: spread,
+       highest_ask_volume: highest_ask_volume,
+       lowest_ask_price: lowest_ask_price,
+       highest_bid_volume: highest_bid_volume,
+       highest_bid_price: highest_bid_price
      )}
   end
 end
