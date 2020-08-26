@@ -56,10 +56,9 @@ defmodule ExchangeApi.Accounts do
     uuid = Ecto.UUID.generate()
 
     {:ok, token, _} = Guardian.encode_and_sign(uuid)
-    attrs = Map.put(attrs, "uuid", uuid)
     attrs = Map.put(attrs, "jwt", token)
 
-    %User{}
+    %User{id: uuid}
     |> User.changeset(attrs)
     |> Repo.insert()
   end
