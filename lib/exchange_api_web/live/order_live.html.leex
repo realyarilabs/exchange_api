@@ -14,7 +14,7 @@
       <td class="collapsing">
         Acknowledgement
       </td>
-      <td><%= @order.acknowledged_at %></td>
+      <td><%= @order.acknowledged_at |> DateTime.from_unix!(:nanosecond)%></td>
     </tr>
     <tr>
       <td>
@@ -32,7 +32,7 @@
       <td>
         Modified at
       </td>
-      <td> <%=@order.modified_at %> </td>
+      <td> <%=@order.modified_at |> DateTime.from_unix!(:nanosecond)%> </td>
     </tr>
     <tr>
       <td>

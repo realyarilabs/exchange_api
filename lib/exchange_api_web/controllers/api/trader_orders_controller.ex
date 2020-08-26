@@ -1,7 +1,7 @@
 defmodule ExchangeApiWeb.Api.TraderOrdersController do
   use ExchangeApiWeb, :controller
 
-  action_fallback ExchangeApiWeb.FallbackController
+  action_fallback ExchangeApiWeb.Api.FallbackController
 
   def index(conn, %{"trader_id" => trader_id, "ticker" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do

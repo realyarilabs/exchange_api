@@ -32,7 +32,7 @@
       <td>
         Acknowledgement
       </td>
-      <td> <%= @trade.acknowledged_at |> DateTime.from_unix(:nanosecond) |> elem(1) %> </td>
+      <td> <%= @trade.acknowledged_at |> DateTime.from_unix!(:nanosecond) %> </td>
     </tr>
     <tr>
       <td>
