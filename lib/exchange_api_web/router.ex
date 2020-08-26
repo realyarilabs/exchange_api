@@ -41,11 +41,11 @@ defmodule ExchangeApiWeb.Router do
   scope "/home", ExchangeApiWeb do
     pipe_through :browser
 
-    live "/", HomeLive, :index
     live "/ticker/:ticker", OrderBookLive, :get
     live "/ticker/:ticker/completed", CompletedTradesLive, :get
     live "/ticker/:ticker/order/:order_id", OrderLive, :get
 
+    get "/", HomeController, :home
     delete "/ticker/:ticker/order/:order_id/cancel", OrderController, :delete
     get "/ticker/:ticker/completed/trade/:trade_id", TradeController, :get
   end
