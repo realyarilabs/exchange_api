@@ -12,11 +12,11 @@ config :exchange_api,
 
 config :exchange_api, ExchangeApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("POSTGRES_USER"),
-  password: System.get_env("POSTGRES_PASS"),
-  database: System.get_env("POSTGRES_DB"),
-  hostname: System.get_env("POSTGRES_HOST"),
-  pool_size: System.get_env("POSTGRES_POOL_SIZE") |> String.to_integer()
+  username: System.get_env("POSTGRES_USER") || "postgres",
+  password: System.get_env("POSTGRES_PASS") || "postgres",
+  database: System.get_env("POSTGRES_DB") || "exchange",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
+  pool_size: System.get_env("POSTGRES_POOL_SIZE") |> String.to_integer() || 10
 
 config :exchange_api, ExchangeApi.Guardian,
   issuer: "exchange_api",
