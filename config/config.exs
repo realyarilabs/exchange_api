@@ -8,7 +8,7 @@
 use Mix.Config
 
 config :exchange_api,
-  ecto_repos: []
+  ecto_repos: [ExchangeApi.Repo]
 
 config :exchange_api, ExchangeApi.Repo,
   adapter: Ecto.Adapters.Postgres,
@@ -17,6 +17,10 @@ config :exchange_api, ExchangeApi.Repo,
   database: "alchemist",
   hostname: "localhost",
   pool_size: 10
+
+config :exchange_api, ExchangeApi.Guardian,
+  issuer: "exchange_api",
+  secret_key: "QXYv3bQuBX8zKhtPiNSrzf+W/zVMSRxcXdRJYWCTo6xo4l3LAgs2C+md84u/sP2n"
 
 # Configures the endpoint
 config :exchange_api, ExchangeApiWeb.Endpoint,
