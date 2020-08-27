@@ -48,6 +48,8 @@ defmodule ExchangeApiWeb.Router do
     get "/", HomeController, :home
     delete "/ticker/:ticker/order/:order_id/cancel", OrderController, :delete
     get "/ticker/:ticker/completed/trade/:trade_id", TradeController, :get
+    post "/ticker/:ticker/create_order", OrderController, :create
+    get "/ticker/:ticker/create_order", OrderController, :get
   end
 
   # Other scopes may use custom stacks.
