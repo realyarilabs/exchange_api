@@ -12,5 +12,7 @@ config :exchange_api, ExchangeApiWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+config :exchange_api, ExchangeApi.Repo, pool: Ecto.Adapters.SQL.Sandbox
+
 # Print only warnings and errors during test
 config :logger, level: :warn

@@ -16,6 +16,8 @@ defmodule ExchangeApiWeb.UserController do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       conn
       |> render("user.jwt.json", %{user: user})
+    else
+      _ -> put_status(conn, :unprocessable_entity) |> json("Failed to create user")
     end
   end
 

@@ -2,13 +2,21 @@ defmodule ExchangeApiWeb.AuthTest do
   use ExchangeApiWeb.ConnCase
   use ExUnit.Case
 
-  setup_all _context do
-    user = ExchangeApi.Accounts.get_user!("2c0cf84d-23ca-4e8a-9bba-8138d6a7c020")
-    token = user.jwt
-    {:ok, %{token: token}}
-  end
-
   describe "Auth protection in Order Controller" do
+    setup _context do
+      user =
+        try do
+          ExchangeApi.Accounts.get_user!("2c0cf84d-23ca-4e8a-9bba-8138d6a7c020")
+        rescue
+          e in Ecto.NoResultsError ->
+            {:ok, user} = ExchangeApi.Accounts.create_user(%{"email" => "test@test.com"})
+            user
+        end
+
+      token = user.jwt
+      {:ok, %{token: token}}
+    end
+
     test "Unauthorized request on buy side" do
       conn = get(build_conn(), "/ticker/AUXLND/orders/buy_side")
       assert conn.resp_body |> Poison.decode!() == %{"error" => "unauthenticated"}
@@ -153,6 +161,20 @@ defmodule ExchangeApiWeb.AuthTest do
   end
 
   describe "Auth protection in Trade Controller" do
+    setup _context do
+      user =
+        try do
+          ExchangeApi.Accounts.get_user!("2c0cf84d-23ca-4e8a-9bba-8138d6a7c020")
+        rescue
+          _e in Ecto.NoResultsError ->
+            {:ok, user} = ExchangeApi.Accounts.create_user(%{"email" => "test@test.com"})
+            user
+        end
+
+      token = user.jwt
+      {:ok, %{token: token}}
+    end
+
     test "Unauthorized request get orders" do
       conn = get(build_conn(), "/ticker/AUXLND/traders/dev/orders")
       assert conn.resp_body |> Poison.decode!() == %{"error" => "unauthenticated"}
@@ -171,9 +193,7 @@ defmodule ExchangeApiWeb.AuthTest do
     end
 
     test "Unauthorized request order placing" do
-      order =
-        Exchange.Utils.random_order(:AUXLND)
-        |> Map.put(:trader_id, "dev")
+      order = Exchange.Utils.random_order(:AUXLND)
 
       json_order = Poison.encode!(order)
 

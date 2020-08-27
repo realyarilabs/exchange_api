@@ -4,6 +4,4 @@ defmodule ExchangeApiWeb.FallbackController do
   def call(conn, {:error, msg}) do
     json(conn, %{"error" => msg})
   end
-
-
 end
