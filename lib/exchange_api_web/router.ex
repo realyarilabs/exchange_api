@@ -20,8 +20,8 @@ defmodule ExchangeApiWeb.Router do
 
   scope "/", ExchangeApiWeb do
     # Auth
-    # pipe_through [:api, :jwt_authenticated]
-    pipe_through :api
+    pipe_through [:api, :jwt_authenticated]
+    # pipe_through :api
 
     scope "/ticker/:ticker" do
       scope "/orders" do
