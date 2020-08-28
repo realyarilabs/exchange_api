@@ -25,20 +25,20 @@ defmodule ExchangeApiWeb.Router do
 
     scope "/ticker/:ticker" do
       scope "/orders" do
-        get "/open", OrderController, :index_open
-        get "/buy_side", OrderController, :count_buy_side
-        get "/sell_side", OrderController, :count_sell_side
-        get "/spread", OrderController, :spread
-        get "/highest_bid_price", OrderController, :highest_bid_price
-        get "/highest_bid_volume", OrderController, :highest_bid_volume
-        get "/lowest_ask_price", OrderController, :lowest_ask_price
-        get "/highest_ask_volume", OrderController, :highest_ask_volume
+        get "/open", Api.OrderController, :index_open
+        get "/buy_side", Api.OrderController, :count_buy_side
+        get "/sell_side", Api.OrderController, :count_sell_side
+        get "/spread", Api.OrderController, :spread
+        get "/highest_bid_price", Api.OrderController, :highest_bid_price
+        get "/highest_bid_volume", Api.OrderController, :highest_bid_volume
+        get "/lowest_ask_price", Api.OrderController, :lowest_ask_price
+        get "/highest_ask_volume", Api.OrderController, :highest_ask_volume
       end
 
       scope "/traders/:trader_id" do
-        resources "/orders", TraderOrdersController, only: [:index, :create, :delete] do
-          delete "/delete", TraderOrdersController, :delete
-          get "/completed", TraderOrdersController, :index_completed
+        resources "/orders", Api.TraderOrdersController, only: [:index, :create, :delete] do
+          delete "/delete", Api.TraderOrdersController, :delete
+          get "/completed", Api.TraderOrdersController, :index_completed
         end
       end
     end
@@ -57,6 +57,9 @@ defmodule ExchangeApiWeb.Router do
     live "/ticker/:ticker", OrderBookLive, :get
     live "/ticker/:ticker/completed", CompletedTradesLive, :get
     live "/ticker/:ticker/order/:order_id", OrderLive, :get
+
+    delete "/ticker/:ticker/order/:order_id/cancel", OrderController, :delete
+    get "/ticker/:ticker/completed/trade/:trade_id", TradeController, :get
   end
 
   # Other scopes may use custom stacks.

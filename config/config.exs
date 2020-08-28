@@ -20,7 +20,7 @@ config :exchange_api, ExchangeApi.Repo,
 
 config :exchange_api, ExchangeApi.Guardian,
   issuer: "exchange_api",
-  secret_key: System.get_env("GUARDIAN_SECRET")
+  secret_key: System.get_env("GUARDIAN_SECRET") || "my_precious"
 
 # Configures the endpoint
 config :exchange_api, ExchangeApiWeb.Endpoint,
