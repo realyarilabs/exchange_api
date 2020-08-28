@@ -14,8 +14,14 @@ defmodule ExchangeApiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :jwt_authenticated do
+    plug ExchangeApi.Guardian.AuthPipeline
+  end
+
   scope "/", ExchangeApiWeb do
-    pipe_through :api
+    # Auth
+    pipe_through [:api, :jwt_authenticated]
+    # pipe_through :api
 
     scope "/ticker/:ticker" do
       scope "/orders" do
@@ -36,6 +42,12 @@ defmodule ExchangeApiWeb.Router do
         end
       end
     end
+  end
+
+  scope "/api/v1", ExchangeApiWeb do
+    pipe_through :api
+
+    post "/access", UserController, :create
   end
 
   scope "/home", ExchangeApiWeb do

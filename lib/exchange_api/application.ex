@@ -7,6 +7,7 @@ defmodule ExchangeApi.Application do
 
   def start(_type, _args) do
     children = [
+      ExchangeApi.Repo,
       # Start the Telemetry supervisor
       ExchangeApiWeb.Telemetry,
       # Start the PubSub system

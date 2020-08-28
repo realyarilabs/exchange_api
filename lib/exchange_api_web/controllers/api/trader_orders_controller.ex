@@ -12,7 +12,7 @@ defmodule ExchangeApiWeb.Api.TraderOrdersController do
   # this wrong
   def index_completed(conn, %{"trader_id" => trader_id, "ticker" => ticker}) do
     with {:ok, tick} <- get_ticker(ticker) do
-      orders = Exchange.completed_trades_by_id(tick, trader_id)
+      {:ok, orders} = Exchange.completed_trades_by_id(tick, trader_id)
       json(conn, %{data: orders})
     end
   end
@@ -48,7 +48,7 @@ defmodule ExchangeApiWeb.Api.TraderOrdersController do
   end
 
   @spec delete(any, map) :: any
-  def delete(conn, %{"id" => id, "ticker" => ticker}) do
+  def delete(conn, %{"trader_orders_id" => id, "ticker" => ticker, "trader_id" => trader_id}) do
     with {:ok, tick} <- get_ticker(ticker) do
       order_status = Exchange.cancel_order(id, tick)
 

@@ -4,7 +4,7 @@ defmodule Mix.Tasks.FillExchange do
 
   def run(args) do
     Application.ensure_all_started(:hackney)
-    switches = [help: :boolean, mode: :boolean, count: :integer, ticker: :string]
+    switches = [help: :boolean, mode: :boolean, count: :integer, ticker: :atom]
     aliases = [h: :help, m: :mode, c: :count, t: :ticker]
     default = [help: false, mode: false, count: 100, ticker: :AUXLND]
 
@@ -38,7 +38,12 @@ defmodule Mix.Tasks.FillExchange do
         key == :ticker
       end)
       |> elem(1)
-      |> String.to_atom()
+
+    ticker =
+      cond do
+        is_atom(ticker) -> ticker
+        is_binary(ticker) -> String.to_atom(ticker)
+      end
 
     if help do
       show_help()
@@ -59,6 +64,7 @@ defmodule Mix.Tasks.FillExchange do
     }
 
     url = "http://localhost:4000/ticker/#{ticker}/traders/#{order.trader_id}/orders"
+    IO.puts("Trader #{inspect(order.trader_id)} placed order #{inspect(order.order_id)}")
 
     HTTPoison.post(
       url,
@@ -77,7 +83,8 @@ defmodule Mix.Tasks.FillExchange do
       | exp_time: order.exp_time + 10_000_000_000
     }
 
-    url = "http://localhost:4000/ticker/AUXLND/traders/#{order.trader_id}/orders"
+    url = "http://localhost:4000/ticker/#{ticker}/traders/#{order.trader_id}/orders"
+    IO.puts("Trader #{inspect(order.trader_id)} placed order #{inspect(order.order_id)}")
 
     HTTPoison.post(
       url,
