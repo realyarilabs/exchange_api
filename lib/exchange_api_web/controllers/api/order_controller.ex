@@ -2,7 +2,7 @@ defmodule ExchangeApiWeb.Api.OrderController do
   use ExchangeApiWeb, :controller
   alias ExchangeApiWeb.Ticker
 
-  action_fallback ExchangeApiWeb.FallbackController
+  action_fallback ExchangeApiWeb.Api.FallbackController
 
   def index_open(conn, %{"ticker" => ticker}) do
     with {:ok, tick} <- Ticker.get_ticker(ticker), {:ok, open} <- Exchange.open_orders(tick) do
@@ -63,6 +63,6 @@ defmodule ExchangeApiWeb.Api.OrderController do
 
   defp json_encode_money(money) do
     {status, %Money{amount: amount, currency: currency}} = money
-    %{status: status, data: %{amount: amount, currency: currency}}
+    {status,%{amount: amount, currency: currency}}
   end
 end
