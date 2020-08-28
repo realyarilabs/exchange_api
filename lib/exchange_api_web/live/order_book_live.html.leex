@@ -78,7 +78,7 @@
         <tr>
           <td> <%= link(order.order_id, to: "/home/ticker/#{@ticker}/order/#{order.order_id}", method: :get) %> </td>
           <td> <%= order.trader_id %> </td>
-          <td> <%= order.exp_time %> </td>
+          <td> <%= order.exp_time |> DateTime.from_unix!(:nanosecond) %> </td>
           <td> <%= order.initial_size %> </td>
           <td> <%= order.size %> </td>
           <td> <%= order.price %> </td>
