@@ -1,0 +1,31 @@
+<%= form_for @conn, "/home/ticker/#{@ticker}/create_order" , [as: :order, class: "ui form"], fn f -> %>
+  <div class="field">
+    <label>Order ID</label>
+    <%= text_input f, :order_id %>
+  </div>
+  <div class="field">
+    <label>Trader ID</label>
+    <%= text_input f, :trader_id %>
+  </div>
+  <div class="field">
+    <label>Side</label>
+    <%= select f, :side, ["": "", "Sell": "sell", "Buy": "buy"], class: "ui fluid dropdown" %>
+  </div>
+  <div class="field">
+    <label>Type</label>
+    <%= select f, :type, ["": "", "Market": "market", "Limit": "limit", "Marketable Limit": "marketable_limit"], class: "ui fluid dropdown" %>
+  </div>
+  <div class="field">
+    <label>Size</label>
+    <%= number_input f, :size %>
+  </div>
+  <div class="field">
+    <label>Price</label>
+    <%= number_input f, :price %>
+  </div>
+  <div class="field">
+    <label>Expiration Date</label>
+    <%= text_input f, :exp_time %>
+  </div>
+  <%= submit "Place Order", class: "ui button" %>
+<% end %>

@@ -15,7 +15,7 @@
   <body>
     <div class="ui top attached menu">
       <div class="item">
-        <img class="ui image" style="max-width:250px; max-height:172px;" src="<%= Routes.static_path(@conn, "/images/alchemist.png") %>" alt="Alchemist Logo">
+        <a href="/home" ><img class="ui image" style="max-width:250px; max-height:172px;" src="<%= Routes.static_path(@conn, "/images/alchemist.png") %>" alt="Alchemist Logo"></a>
       </div>
       <div class="right menu">
         <%= link raw("<i class='github icon'></i> GitHub"), to: "https://github.com/realyarilabs/exchange",  class: "item" %>
