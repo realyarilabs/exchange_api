@@ -43,7 +43,7 @@ defmodule ExchangeApi.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:exchange, "~> 0.2.1"},
+      {:exchange, "~> 0.2.2"},
       {:httpoison, "~> 1.7"},
       {:comeonin, "~> 5.3"},
       {:bcrypt_elixir, "~> 1.0"},

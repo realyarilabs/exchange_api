@@ -19,7 +19,7 @@ defmodule ExchangeApiWeb.OrderController do
       order_id: Map.get(params, "order_id"),
       trader_id: Map.get(params, "trader_id"),
       side: Map.get(params, "side") |> String.to_atom(),
-      price: Map.get(params, "price"),
+      price: Map.get(params, "price") |> String.to_integer(),
       size: Map.get(params, "size") |> String.to_integer(),
       initial_size: Map.get(params, "initial_size"),
       type: Map.get(params, "type") |> String.to_atom(),
