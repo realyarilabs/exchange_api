@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Alchemist · Order Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous"></script>
+    <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <%= csrf_meta_tag() %>
+    <%= live_title_tag assigns[:page_title] || "ExchangeApi", suffix: " · Phoenix Framework" %>
+  </head>
+  <body>
+    <div class="ui top attached menu">
+      <div class="item">
+        <a href="/home" ><img class="ui image" style="max-width:250px; max-height:172px;" src="<%= Routes.static_path(@conn, "/images/alchemist.png") %>" alt="Alchemist Logo"></a>
+      </div>
+      <div class="right menu">
+        <%= link raw("<i class='github icon'></i> GitHub"), to: "https://github.com/realyarilabs/exchange",  class: "item" %>
+        <%= link raw("<i class='facebook icon'></i> Facebook"), to: "https://www.facebook.com/watch/alchemistapp/", class: "item" %>
+        <%= link raw("<i class='instagram icon'></i> Instagram"), to: "https://www.instagram.com/alchemist_app/", class: "item" %>
+        <%= link raw("<i class='twitter icon'></i> Twitter"), to: "https://twitter.com/alchemist_app", class: "item" %>
+      </div>
+    </div>
+    <main role="main" class="ui container">
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= @inner_content %>
+    </main>
+  </body>
+</html>

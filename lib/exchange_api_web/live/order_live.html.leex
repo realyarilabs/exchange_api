@@ -1,0 +1,81 @@
+<%= if @order != nil do %>
+
+<h1 class="ui dividing header">Order</h1>
+<p><b>Order ID: </b><%= @order_id %></p>
+<div class="ui container">
+ <table class="ui celled striped table">
+  <thead>
+    <tr><th colspan="3">
+      Order Information
+    </th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td class="collapsing">
+        Acknowledgement
+      </td>
+      <td><%= @order.acknowledged_at |> DateTime.from_unix!(:nanosecond)%></td>
+    </tr>
+    <tr>
+      <td>
+        Expiration
+      </td>
+      <td><%= @order.exp_time %></td>
+    </tr>
+    <tr>
+      <td>
+        Initial size
+      </td>
+      <td> <%= @order.initial_size %> </td>
+    </tr>
+    <tr>
+      <td>
+        Modified at
+      </td>
+      <td> <%=@order.modified_at |> DateTime.from_unix!(:nanosecond)%> </td>
+    </tr>
+    <tr>
+      <td>
+        Price
+      </td>
+      <td> <%= @order.price %> </td>
+    </tr>
+    <tr>
+      <td>
+        Side
+      </td>
+      <td> <%= @order.side %> </td>
+    </tr>
+    <tr>
+      <td>
+        Size
+      </td>
+      <td> <%= @order.size %> </td>
+    </tr>
+    <tr>
+      <td>
+        Ticker
+      </td>
+      <td> <%= @order.ticker %> </td>
+    </tr>
+    <tr>
+      <td>
+        Trader
+      </td>
+      <td> <%= @order.trader_id %> </td>
+    </tr>
+    <tr>
+      <td>
+        Type
+      </td>
+      <td> <%= @order.type %> </td>
+    </tr>
+  </tbody>
+</table>
+<p></p>
+</div>
+<% else %>
+    Order does not exist.
+<% end %>
+
+<%= button("Cancel Order", to: "/home/ticker/#{@ticker}/order/#{@order_id}/cancel", method: :delete, class: "ui right floated button", style: "margin-top:10px" ) %>

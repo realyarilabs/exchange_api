@@ -1,0 +1,22 @@
+<h1 class="ui dividing header">Completed Trades (<%= @ticker %>)</h1>
+<div class="ui container">
+  <table class="ui celled table">
+    <thead>
+      <th>Trade ID</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Currency</th>
+      <th>Type</th>
+    </thead>
+    <tbody>
+      <%= for trade <- @trades do %>
+        <tr>
+        <td> <%= link(trade.trade_id, to: "/home/ticker/#{@ticker}/completed/trade/#{trade.trade_id}", method: :get) %> </td>
+          <td> <%= trade.size %> </td>
+          <td> <%= trade.price %> </td>
+          <td> <%= trade.currency %> </td>
+          <td> <%= trade.type %> </td>
+        </tr>
+      <% end %>
+    <tbody>
+  </table>

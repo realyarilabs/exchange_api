@@ -10,6 +10,18 @@ use Mix.Config
 config :exchange_api,
   ecto_repos: [ExchangeApi.Repo]
 
+config :exchange_api, ExchangeApi.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: System.get_env("POSTGRES_USER") || "postgres",
+  password: System.get_env("POSTGRES_PASS") || "postgres",
+  database: System.get_env("POSTGRES_DB") || "alchemist",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
+  pool_size: (System.get_env("POSTGRES_POOL_SIZE") || "10") |> String.to_integer()
+
+config :exchange_api, ExchangeApi.Guardian,
+  issuer: "exchange_api",
+  secret_key: System.get_env("GUARDIAN_SECRET") || "my_precious"
+
 # Configures the endpoint
 config :exchange_api, ExchangeApiWeb.Endpoint,
   url: [host: "localhost"],
@@ -25,7 +37,11 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+config :exchange,
+  message_bus_adapter: Exchange.Adapters.EventBus,
+  time_series_adapter: Exchange.Adapters.InMemoryTimeSeries,
+  tickers: [{:AUXLND, :GBP, 1000, 100_000}, {:AGUS, :USD, 1000, 100_000}]
