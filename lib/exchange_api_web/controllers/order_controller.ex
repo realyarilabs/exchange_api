@@ -10,11 +10,14 @@ defmodule ExchangeApiWeb.OrderController do
 
   def create(conn, %{"ticker" => ticker, "order" => params}) do
     exp_time = Map.get(params, "exp_time", nil)
+
     exp_time =
-      cond do
-        is_integer(exp_time) -> DateTime.from_unix(exp_time, :millisecond) |> elem(1)
-        true -> nil
+      if is_integer(exp_time) do
+        DateTime.from_unix(exp_time, :millisecond) |> elem(1)
+      else
+        nil
       end
+
     order_params = %{
       order_id: Map.get(params, "order_id"),
       trader_id: Map.get(params, "trader_id"),
@@ -28,7 +31,9 @@ defmodule ExchangeApiWeb.OrderController do
       modified_at: DateTime.utc_now() |> DateTime.to_unix(:nanosecond),
       ticker: ticker |> String.to_atom()
     }
-    with {:ok, tick} <- Ticker.get_ticker(ticker), :ok <- Exchange.place_order(order_params, tick) do
+
+    with {:ok, tick} <- Ticker.get_ticker(ticker),
+         :ok <- Exchange.place_order(order_params, tick) do
       redirect(conn, to: "/home/ticker/#{ticker}")
     end
   end

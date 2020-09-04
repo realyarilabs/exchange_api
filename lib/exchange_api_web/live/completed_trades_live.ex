@@ -1,4 +1,5 @@
 defmodule ExchangeApiWeb.CompletedTradesLive do
+  @moduledoc false
   use ExchangeApiWeb, :live_view
   alias ExchangeApiWeb.Ticker
 
@@ -9,7 +10,7 @@ defmodule ExchangeApiWeb.CompletedTradesLive do
     trades = Exchange.completed_trades(tick)
 
     {:ok,
-      assign(socket,
+     assign(socket,
        ticker: ticker,
        trades: trades
      )}
@@ -20,7 +21,7 @@ defmodule ExchangeApiWeb.CompletedTradesLive do
     trades = Exchange.completed_trades(ticker)
 
     {:noreply,
-      assign(socket,
+     assign(socket,
        trades: trades
      )}
   end

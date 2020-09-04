@@ -13,11 +13,13 @@ defmodule ExchangeApiWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-      conn
-      |> render("user.jwt.json", %{user: user})
-    else
-      _ -> put_status(conn, :unprocessable_entity) |> json("Failed to create user")
+    case Accounts.create_user(user_params) do
+      {:ok, %User{} = user} ->
+        conn
+        |> render("user.jwt.json", %{user: user})
+
+      _ ->
+        put_status(conn, :unprocessable_entity) |> json("Failed to create user")
     end
   end
 

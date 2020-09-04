@@ -1,4 +1,5 @@
 defmodule ExchangeApi.Guardian do
+  @moduledoc false
   use Guardian, otp_app: :exchange_api
 
   def subject_for_token(uuid, _claims) do

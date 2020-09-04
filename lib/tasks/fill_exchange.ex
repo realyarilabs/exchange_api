@@ -1,4 +1,7 @@
 defmodule Mix.Tasks.FillExchange do
+  @moduledoc """
+  Module defining a mix task to fill an Exchange with random orders.
+  """
   use Mix.Task
   @shortdoc "Populate exchange"
 
@@ -40,9 +43,10 @@ defmodule Mix.Tasks.FillExchange do
       |> elem(1)
 
     ticker =
-      cond do
-        is_atom(ticker) -> ticker
-        is_binary(ticker) -> String.to_atom(ticker)
+      if is_binary(ticker) do
+        String.to_atom(ticker)
+      else
+        ticker
       end
 
     if help do
@@ -95,7 +99,7 @@ defmodule Mix.Tasks.FillExchange do
     place_orders(ticker, false, 1)
   end
 
-  def show_help() do
+  def show_help do
     IO.puts("""
     Fill Exchange task:
     This task serves for population an exchange. It creates http requests with random orders and one can use it to insert orders continuously or insert a fixed number of orders.

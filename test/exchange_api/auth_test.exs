@@ -83,7 +83,7 @@ defmodule ExchangeApiWeb.AuthTest do
         |> get("/ticker/AUXLND/orders/spread")
 
       assert conn.resp_body |> Poison.decode!() == %{
-               "data" => %{"amount" => 98998, "currency" => "GBP"}
+               "data" => %{"amount" => 98_998, "currency" => "GBP"}
              }
     end
 
@@ -138,7 +138,7 @@ defmodule ExchangeApiWeb.AuthTest do
         |> get("/ticker/AUXLND/orders/lowest_ask_price")
 
       assert conn.resp_body |> Poison.decode!() == %{
-               "data" => %{"amount" => 99999, "currency" => "GBP"}
+               "data" => %{"amount" => 99_999, "currency" => "GBP"}
              }
     end
 

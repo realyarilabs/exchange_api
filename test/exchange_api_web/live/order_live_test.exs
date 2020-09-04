@@ -9,8 +9,9 @@ defmodule ExchangeApiWeb.OrderLiveTest do
       side: :sell,
       price: 5500,
       size: 2100,
-      type: :limit,
+      type: :limit
     }
+
     Exchange.place_order(order_params, :AGUS)
     conn = get(conn, "/home/ticker/AGUS/order/20")
     assert html_response(conn, 200) =~ "<h1 class=\"ui dividing header\">Order</h1>"

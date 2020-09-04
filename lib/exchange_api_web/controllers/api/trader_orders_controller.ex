@@ -22,9 +22,10 @@ defmodule ExchangeApiWeb.Api.TraderOrdersController do
     exp_time = Map.get(params, "exp_time", nil)
 
     exp_time =
-      cond do
-        is_integer(exp_time) -> DateTime.from_unix(exp_time, :millisecond) |> elem(1)
-        true -> exp_time
+      if is_integer(exp_time) do
+        DateTime.from_unix(exp_time, :millisecond) |> elem(1)
+      else
+        exp_time
       end
 
     order_params = %{
@@ -75,8 +76,9 @@ defmodule ExchangeApiWeb.Api.TraderOrdersController do
   end
 
   def parse_time(timestamp, unit) when is_integer(timestamp) do
-    with {:ok, time} = DateTime.from_unix(timestamp, unit) do
-      time
+    case DateTime.from_unix(timestamp, unit) do
+      {:ok, time} -> time
+      error -> error
     end
   end
 

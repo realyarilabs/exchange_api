@@ -1,4 +1,5 @@
 defmodule ExchangeApiWeb.OrderLive do
+  @moduledoc false
   use ExchangeApiWeb, :live_view
   alias ExchangeApiWeb.Ticker
 

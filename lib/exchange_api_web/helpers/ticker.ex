@@ -1,4 +1,5 @@
 defmodule ExchangeApiWeb.Ticker do
+  @moduledoc false
   def get_ticker(ticker) do
     case ticker do
       "AUXLND" -> {:ok, :AUXLND}

@@ -1,4 +1,7 @@
 defmodule ExchangeApi.Guardian.AuthPipeline do
+  @moduledoc """
+  Guardian Auth pipeline used by our Router.
+  """
   use Guardian.Plug.Pipeline,
     otp_app: :exchange_api,
     module: ExchangeApi.Guardian,
