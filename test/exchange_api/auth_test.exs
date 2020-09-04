@@ -8,7 +8,7 @@ defmodule ExchangeApiWeb.AuthTest do
         try do
           ExchangeApi.Accounts.get_user!("2c0cf84d-23ca-4e8a-9bba-8138d6a7c020")
         rescue
-          e in Ecto.NoResultsError ->
+          _e in Ecto.NoResultsError ->
             {:ok, user} = ExchangeApi.Accounts.create_user(%{"email" => "test@test.com"})
             user
         end

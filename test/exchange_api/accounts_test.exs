@@ -6,8 +6,8 @@ defmodule ExchangeApi.AccountsTest do
   describe "users" do
     alias ExchangeApi.Accounts.User
 
-    @valid_attrs %{"email" => "some email"}
-    @update_attrs %{"email" => "some updated email"}
+    @valid_attrs %{"email" => "user#{System.unique_integer()}@example.com"}
+    @update_attrs %{"email" => "user#{System.unique_integer()}@example.com"}
     @invalid_attrs %{"email" => nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -30,8 +30,9 @@ defmodule ExchangeApi.AccountsTest do
     end
 
     test "create_user/1 with valid data creates a user" do
-      assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
-      assert user.email == "some email"
+      attrs = @valid_attrs
+      assert {:ok, %User{} = user} = Accounts.create_user(attrs)
+      assert user.email == attrs["email"]
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -39,9 +40,10 @@ defmodule ExchangeApi.AccountsTest do
     end
 
     test "update_user/2 with valid data updates the user" do
+      attrs = @update_attrs
       user = user_fixture()
-      assert {:ok, %User{} = user} = Accounts.update_user(user, @update_attrs)
-      assert user.email == "some updated email"
+      assert {:ok, %User{} = user} = Accounts.update_user(user, attrs)
+      assert user.email == attrs["email"]
     end
 
     test "update_user/2 with invalid data returns error changeset" do

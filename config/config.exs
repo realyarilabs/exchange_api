@@ -14,7 +14,7 @@ config :exchange_api, ExchangeApi.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: System.get_env("POSTGRES_USER") || "postgres",
   password: System.get_env("POSTGRES_PASS") || "postgres",
-  database: System.get_env("POSTGRES_DB") || "alchemist",
+  database: System.get_env("POSTGRES_DB") || "exchange_api",
   hostname: System.get_env("POSTGRES_HOST") || "localhost",
   pool_size: (System.get_env("POSTGRES_POOL_SIZE") || "10") |> String.to_integer()
 

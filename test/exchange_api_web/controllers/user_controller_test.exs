@@ -1,21 +1,12 @@
 defmodule ExchangeApiWeb.UserControllerTest do
   use ExchangeApiWeb.ConnCase
 
-  alias ExchangeApi.Accounts
-  alias ExchangeApi.Accounts.User
-
   @create_attrs %{
-    email: "some email"
+    "email" => "user#{System.unique_integer()}@example.com"
   }
-  @update_attrs %{
-    email: "some updated email"
+  @invalid_attrs %{
+    "email" => nil
   }
-  @invalid_attrs %{email: nil}
-
-  def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
-    user
-  end
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -31,10 +22,5 @@ defmodule ExchangeApiWeb.UserControllerTest do
       conn = post(conn, Routes.user_path(conn, :create), user: @invalid_attrs)
       assert json_response(conn, 422) == "Failed to create user"
     end
-  end
-
-  defp create_user(_) do
-    user = fixture(:user)
-    %{user: user}
   end
 end

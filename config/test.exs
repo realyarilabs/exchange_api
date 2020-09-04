@@ -12,7 +12,13 @@ config :exchange_api, ExchangeApiWeb.Endpoint,
   http: [port: 4002],
   server: false
 
-config :exchange_api, ExchangeApi.Repo, pool: Ecto.Adapters.SQL.Sandbox
+# Configure your database
+config :exchange_api, ExchangeApi.Repo,
+  username: System.get_env("POSTGRES_USER") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
+  database: "exchange_api_test",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox
 
 # Print only warnings and errors during test
 config :logger, level: :warn
