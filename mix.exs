@@ -47,7 +47,7 @@ defmodule ExchangeApi.MixProject do
       {:exchange, "~> 0.2.2"},
       {:httpoison, "~> 1.7"},
       {:comeonin, "~> 5.3"},
-      {:bcrypt_elixir, "~> 1.0"},
+      {:bcrypt_elixir, "~> 2.2"},
       {:guardian, "~> 2.1"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
