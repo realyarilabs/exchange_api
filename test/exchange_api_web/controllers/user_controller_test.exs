@@ -15,7 +15,7 @@ defmodule ExchangeApiWeb.UserControllerTest do
   describe "create user" do
     test "renders user when data is valid", %{conn: conn} do
       conn = post(conn, Routes.user_path(conn, :create), user: @create_attrs)
-      assert %{"jwt" => jwt} = json_response(conn, 200)
+      assert %{"jwt" => _jwt} = json_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
