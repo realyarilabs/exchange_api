@@ -72,7 +72,7 @@ defmodule Mix.Tasks.FillExchange do
 
     HTTPoison.post(
       url,
-      order |> Poison.encode() |> elem(1),
+      order |> Jason.encode!(),
       [{"Content-Type", "application/json"}]
     )
 
@@ -92,7 +92,7 @@ defmodule Mix.Tasks.FillExchange do
 
     HTTPoison.post(
       url,
-      order |> Poison.encode() |> elem(1),
+      order |> Jason.encode!(),
       [{"Content-Type", "application/json"}]
     )
 
