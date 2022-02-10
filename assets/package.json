@@ -19,7 +19,7 @@
     "copy-webpack-plugin": "^6.0.3",
     "css-loader": "^4.2.2",
     "sass-loader": "^10.0.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "hard-source-webpack-plugin": "^0.13.1",
     "mini-css-extract-plugin": "^0.10.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
